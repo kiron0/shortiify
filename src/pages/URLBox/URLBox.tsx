@@ -5,6 +5,7 @@ import auth from '../../auth/Firebase/firebase.init'
 import { useQuery } from '@tanstack/react-query'
 import { BASE_API } from '../../config'
 import { Link } from 'react-router-dom'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function URLBox() {
           const [user] = useAuthState(auth);
@@ -25,8 +26,6 @@ export default function URLBox() {
                     })
           );
 
-          // console.log(urlsData);
-
           return (
                     <div className='mt-12 md:mt-24'>
                               <div className='flex flex-col justify-center items-center gap-2 text-center text-white'>
@@ -41,22 +40,24 @@ export default function URLBox() {
                                                                       urlsData?.urls?.length > 0 ? (
                                                                                 <div className='mt-8 md:mt-12 flex flex-col justify-center items-center'>
                                                                                           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto'>
-                                                                                                    {urlsData?.urls?.slice(-2).reverse().map((item: any, index: number) => {
+                                                                                                    {urlsData?.urls?.slice(-3).reverse().map((item: any, index: number) => {
                                                                                                               return (
                                                                                                                         <div className="card w-[350px] bg-neutral shadow-xl text-white" key={index}>
                                                                                                                                   <div className="card-body">
                                                                                                                                             <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
-                                                                                                                                            <a className='text-secondary' href={`${window.location.href}k/${item?.slug}`}>{window.location.href}k/{item?.slug} <i className='bx bx-link-external'></i></a>
+                                                                                                                                            <a className='text-secondary' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <i className='bx bx-link-external'></i></a>
                                                                                                                                             <div className='flex justify-center items-center'>
                                                                                                                                                       <p>{item?.createdAt}</p>
 
                                                                                                                                                       <div className='flex items-center gap-3'>
-                                                                                                                                                                <i className='bx bx-copy cursor-pointer text-secondary text-xl' onClick={() => {
-                                                                                                                                                                          toast.success("Copied to clipboard!")
-                                                                                                                                                                }}></i>
-                                                                                                                                                                <i className='bx bx-trash cursor-pointer text-error text-xl' onClick={() => {
-                                                                                                                                                                          toast.success("Deleted Successfully!")
-                                                                                                                                                                }}></i>
+                                                                                                                                                                <CopyToClipboard text={`${window.location.href}k/${item?.slug}`} onCopy={() => {
+                                                                                                                                                                          toast.success('URL Copied To Clipboard..!', {
+                                                                                                                                                                                    icon: "✋",
+                                                                                                                                                                                    duration: 3000,
+                                                                                                                                                                          });
+                                                                                                                                                                }}>
+                                                                                                                                                                          <i className='bx bx-copy cursor-pointer text-secondary text-xl'></i>
+                                                                                                                                                                </CopyToClipboard>
                                                                                                                                                       </div>
                                                                                                                                             </div>
                                                                                                                                   </div>
@@ -70,7 +71,7 @@ export default function URLBox() {
                                                                                           </div>
                                                                                 </div>
                                                                       ) : (
-                                                                                <div className='flex justify-center items-center mt-6'>
+                                                                                <div className='flex justify-center items-center mt-10'>
                                                                                           <div className='card w-[350px] bg-neutral shadow-xl text-white'>
                                                                                                     <div className="card-body">
                                                                                                               <p className='text-center'>No URLs found!</p>

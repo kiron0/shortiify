@@ -8,6 +8,8 @@ export default function AllLinks() {
           const uid = localStorage.getItem("uid");
           const {
                     data: urlsData = [],
+                    isLoading,
+                    refetch,
           } = useQuery(["urls"], () =>
                     fetch(`${BASE_API}/user?uid=${uid}`, {
                               headers: {
@@ -23,12 +25,16 @@ export default function AllLinks() {
           );
           return (
                     <div>
+                              <div className="title mt-3 md:mt-8 md:mx-8">
+                                        <h3 className="text-2xl font-semibold">Manage URLs</h3>
+                                        <span>You can manage all the URLs whom are already created</span>
+                              </div>
                               {
                                         urlsData?.urls?.length > 0 ? (
                                                   <div className='mt-8 md:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                                                             {urlsData?.urls?.slice(0).reverse()?.map((item: any, index: number) => {
                                                                       return (
-                                                                                <LinksCard item={item} key={index} />
+                                                                                <LinksCard item={item} key={index} refetch={refetch} isLoading={isLoading} />
                                                                       )
                                                             })}
                                                   </div>

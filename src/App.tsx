@@ -85,13 +85,8 @@ function App() {
     // document.addEventListener("contextmenu", (e) => {
     //   e.preventDefault();
     // });
-    const uid = localStorage.getItem("uid");
-    if (uid) {
-      refetch();
-    } else {
-      router.navigate("/login");
-    }
-  }, [refetch,]);
+    window.localStorage.getItem("uid");
+  }, [refetch]);
 
   return (
     <>

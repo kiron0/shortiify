@@ -27,10 +27,8 @@ const useToken = (user: any) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(uid);
           const accessToken = data.token;
           localStorage.setItem("accessToken", accessToken);
-          // set user uid in local storage
           localStorage.setItem("uid", uid);
           setToken(accessToken);
         });

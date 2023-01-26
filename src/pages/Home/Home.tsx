@@ -6,7 +6,8 @@ import auth from '../../auth/Firebase/firebase.init';
 import { BASE_API } from '../../config';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { InitializeContext } from '../../App';
-import Loading from '../../components/Loading/Loading';
+import Swal from 'sweetalert2';
+import Loading from '../../shared/Loading/Loading';
 
 export default function Home() {
           const { refetch } = useContext(InitializeContext);
@@ -45,38 +46,69 @@ export default function Home() {
                               }
                     };
 
-                    // console.log(postURLs);
-                    if (input !== '' && !urlError && user) {
-                              setLoading(true);
-                              const uid = localStorage.getItem('uid');
-                              const res = await fetch(`${BASE_API}/user/urls?uid=${uid}`, {
-                                        method: 'POST',
-                                        headers: {
-                                                  'Content-Type': 'application/json',
-                                                  'authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-                                        },
-                                        body: JSON.stringify(postURLs)
-                              });
-                              const data = await res.json();
-                              if (data.success) {
-                                        toast.success('Shortened Successfully..!');
-                                        setLoading(false);
-                                        form.URL.value = '';
-                                        refetch();
-                              } else {
-                                        toast.error('Something went wrong..!');
-                                        setLoading(false);
-                              }
+                    if (input === '') {
+                              toast.error('Please Enter URL..!');
+                              return;
                     } else if (!user) {
                               toast.error('Please Login to Shorten URL..!');
-                    } else {
-                              toast.error('Please Enter URL..!');
+                              return;
+                    }
+                    else {
+                              // check if url already exists
+                              const res = await fetch(`${BASE_API}/user/urls?uid=${localStorage.getItem('uid')}`, {
+                                        method: 'GET',
+                                        headers: {
+                                                  'Content-Type': 'application/json',
+                                                  authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                                        },
+                              });
+                              const data = await res.json();
+                              const urls = data;
+                              const urlExists = urls?.find((url: any) => url?.url === input);
+                              if (urlExists) {
+                                        Swal.fire({
+                                                  icon: 'error',
+                                                  title: 'Oops...',
+                                                  text: 'URL Already Exists, Check Your Dashboard..!',
+                                                  confirmButtonText: 'Ok, Got it!',
+                                        });
+                                        return;
+                              } else if (input === '') {
+                                        toast.error('Please Enter URL..!');
+                                        return;
+                              } else if (!urlExists && input !== '' && !urlError && !user) {
+                                        toast.error('Please Login to Shorten URL..!');
+                                        return;
+                              } else {
+                                        if (input !== '' && !urlError && user) {
+                                                  setLoading(true);
+                                                  const uid = localStorage.getItem('uid');
+                                                  const res = await fetch(`${BASE_API}/user/urls?uid=${uid}`, {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                      'Content-Type': 'application/json',
+                                                                      'authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+                                                            },
+                                                            body: JSON.stringify(postURLs)
+                                                  });
+                                                  const data = await res.json();
+                                                  if (data.success) {
+                                                            toast.success('Shortened Successfully..!');
+                                                            setLoading(false);
+                                                            form.URL.value = '';
+                                                            refetch();
+                                                  } else {
+                                                            toast.error('Something went wrong..!');
+                                                            setLoading(false);
+                                                  }
+                                        } else if (!user || input !== '') {
+                                                  toast.error('Please Login to Shorten URL..!');
+                                        } else {
+                                                  toast.error('Please Enter URL..!');
+                                        }
+                              }
                     }
           }
-
-          if (loading) return (
-                    <Loading />
-          )
 
           return (
                     <div className='mt-12 md:mt-24'>
@@ -106,7 +138,15 @@ export default function Home() {
                                         </form>
                               </div>
 
-                              <URLBox />
+                              {
+                                        loading ? (
+                                                  <div className='flex flex-col justify-center items-center h-[30vh] md:h-[40vh]'>
+                                                            <Loading />
+                                                  </div>
+                                        ) : (
+                                                  <URLBox />
+                                        )
+                              }
                     </div>
           )
 }

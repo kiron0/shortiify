@@ -11,7 +11,7 @@ export default function Root() {
   const [user] = useAuthState(auth);
   return (
     <>
-      <div className={`bg-[url('./assets/bg.jpg')] ${user ? "pb-7" : "h-screen bg-no-repeat"}`}>
+      <div className={`bg-[url('./assets/bg.jpg')] ${user ? "pb-28 md:pb-40 lg:pb-44" : "h-screen bg-no-repeat"}`}>
         <Navbar />
         <Home />
       </div>

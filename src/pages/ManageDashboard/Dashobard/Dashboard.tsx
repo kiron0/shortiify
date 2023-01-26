@@ -21,6 +21,8 @@ const Dashboard = () => {
   const handleLogOut = async () => {
     await signOut(auth).then(() => {
       navigate("/");
+      localStorage.removeItem("uid");
+      localStorage.removeItem("accessToken");
       toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
         position: "top-center",
       });
@@ -123,7 +125,7 @@ const Dashboard = () => {
               </div>
               <hr className="font-semibold" />
               <li className="py-1 font-semibold md:hidden">
-                <Link to="/profile">
+                <Link to="/dashboard/me">
                   <i className="bx bxs-user font-semibold"></i> Profile
                 </Link>
               </li>
@@ -147,6 +149,7 @@ const Dashboard = () => {
               className="logo font-semibold text-center flex items-center flex-col gap-2"
             >
               <img src="https://k-task.vercel.app/static/media/todo.03598633f860857f67d2.png" alt="" className="w-16" /> {appName}
+              <p className="text-sm">A URL Shortener Web App</p>
             </Link>
             <div
               onClick={handleLogOut}

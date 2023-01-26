@@ -21,6 +21,8 @@ const RequireAdmin = ({ children }: Props) => {
 
   if (!user || !admin) {
     signOut(auth);
+    localStorage.removeItem("uid");
+    localStorage.removeItem("accessToken");
     return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
   }
   return children;
