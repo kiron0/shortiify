@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
+.preloader {
+  width: 100%;
+  height: 100vh;
+  padding: 0px;
+  margin: 0px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background: #f7f7f7;
+}
+
+.box_section {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform: rotate(45deg);
+  background: white;
+  border-radius: 20px;
+  animation: 1s ease-in-out alternate infinite shadows;
+}
+
+.image_box .loader_text {
+  font-family: "Poppins", sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  transform: rotate(-45deg);
+  color: #000;
+}
+
+.img_filter {
+  width: 120px;
+  height: 120px;
+  opacity: 0.45;
+  border-radius: 20px;
+  position: absolute;
+  -webkit-animation-duration: 0.9s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-name: placeHolderShimmer;
+  -webkit-animation-timing-function: linear;
+  background: #f6f7f9;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f9 0%,
+    #e9ebee 20%,
+    #f6f7f9 40%,
+    #f6f7f9 100%
+  );
+  background-repeat: no-repeat;
+}
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+@keyframes shadows {
+  0% {
+    box-shadow: none;
+  }
+  100% {
+    box-shadow: 9px 16px 8px rgb(227, 227, 227);
+  }
+}
