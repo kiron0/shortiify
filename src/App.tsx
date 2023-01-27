@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Toaster } from "react-hot-toast";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Root from './Layouts/Root';
@@ -16,6 +16,8 @@ import { BASE_API } from './config';
 import Setting from './pages/ManageDashboard/Setting/Setting';
 import AllLinks from './pages/ManageDashboard/AllLinks/AllLinks';
 import ManageUsers from './pages/ManageDashboard/ManageUsers/ManageUsers';
+import ThemeChanger from './shared/ThemeChanger/ThemeChanger';
+import UserUrls from './pages/ManageDashboard/UserUrls/UserUrls';
 
 const router = createBrowserRouter(
   [
@@ -56,6 +58,12 @@ const router = createBrowserRouter(
           </RequireAdmin>
         },
         {
+          path: "/dashboard/user/urls/:uid",
+          element: <RequireAdmin>
+            <UserUrls />
+          </RequireAdmin>
+        },
+        {
           path: "/dashboard/setting",
           element: <RequireAdmin>
             <Setting />
@@ -73,6 +81,12 @@ const router = createBrowserRouter(
 export const InitializeContext = createContext(null as any);
 
 function App() {
+  const [theme, setTheme] = useState<string>("night");
+
+  useEffect(() => {
+    setTheme(window.localStorage.getItem("theme") || "night");
+  }, []);
+
   const { data, refetch, isLoading } = useQuery(["appName"], async () => {
     const res = await axios.get(`${BASE_API}/app/appName`);
     return res?.data;
@@ -90,9 +104,12 @@ function App() {
 
   return (
     <>
-      <InitializeContext.Provider value={{ appName, refetch, isLoading }}>
-        <RouterProvider router={router} />
-        <Toaster />
+      <InitializeContext.Provider value={{ appName, theme, setTheme, refetch, isLoading }}>
+        <div data-theme={theme ? theme : "light"}>
+          <RouterProvider router={router} />
+          <Toaster />
+          <ThemeChanger />
+        </div>
       </InitializeContext.Provider>
     </>
   );

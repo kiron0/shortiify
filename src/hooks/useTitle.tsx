@@ -5,7 +5,7 @@ const useTitle = (titleText: string) => {
   const { appName } = useContext(InitializeContext);
   const [title, setTitle] = useState("");
   useEffect(() => {
-    document.title = titleText + " - " + appName;
+    document.title = titleText + " - " + appName + " URL Shortener";
     setTitle(titleText);
   }, [titleText, appName]);
   return [title];

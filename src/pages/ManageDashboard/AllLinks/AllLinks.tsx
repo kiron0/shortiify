@@ -3,6 +3,7 @@ import { BASE_API } from '../../../config';
 import { toast } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
 import LinksCard from './LinksCard';
+import { Link } from 'react-router-dom';
 
 export default function AllLinks() {
           const uid = localStorage.getItem("uid");
@@ -43,6 +44,9 @@ export default function AllLinks() {
                                                             <div className='card w-[350px] bg-neutral shadow-xl text-white'>
                                                                       <div className="card-body">
                                                                                 <p className='text-center'>No URLs found!</p>
+                                                                      </div>
+                                                                      <div className='flex justify-center items-center pb-6'>
+                                                                                <Link to="/"><button className='btn btn-sm btn-primary'>Go to Home</button></Link>
                                                                       </div>
                                                             </div>
                                                   </div>

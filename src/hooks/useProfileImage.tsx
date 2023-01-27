@@ -9,7 +9,13 @@ const useProfileImage = (user: any) => {
     const fetchData = async () => {
       const uid = localStorage.getItem("uid");
       const result = await fetch(
-        `${BASE_API}/users?uid=${uid}`
+        `${BASE_API}/users?uid=${uid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
       );
       const data = await result.json();
       setImage(data[0]?.image);

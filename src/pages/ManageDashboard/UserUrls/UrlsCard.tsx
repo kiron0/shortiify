@@ -1,9 +1,7 @@
 import React from 'react'
+import Loader from '../../../components/Loader/Loader'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { toast } from 'react-hot-toast'
-import Swal from "sweetalert2";
-import { BASE_API } from '../../../config'
-import Loader from '../../../components/Loader/Loader'
 
 type Props = {
           item: any,
@@ -11,39 +9,11 @@ type Props = {
           isLoading: boolean
 }
 
-export default function LinksCard({ item, refetch, isLoading }: Props) {
-          const deleteUrl = () => {
-                    Swal.fire({
-                              title: "Are you sure?",
-                              text: "You won't be able to revert this!",
-                              icon: "warning",
-                              showCancelButton: true,
-                              confirmButtonText: "Yes, delete it!",
-                    }).then((willDelete: any) => {
-                              if (willDelete.isConfirmed) {
-                                        const uid = localStorage.getItem("uid");
-                                        fetch(`${BASE_API}/user/url/delete?uid=${uid}&&slug=${item?.slug}`, {
-                                                  method: "DELETE",
-                                                  headers: {
-                                                            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                                                  },
-                                        }).then((res) => res.json()).then((data) => {
-                                                  if (data?.error) {
-                                                            toast.error(data?.error);
-                                                            return;
-                                                  }
-                                                  toast.success(data?.message);
-                                                  refetch();
-                                        })
-                              }
-                    });
-
-          }
+export default function UrlsCard({ item, refetch, isLoading }: Props) {
 
           if (isLoading) return (
                     <Loader />
           )
-
           return (
                     <div className="card w-full bg-base-100 shadow-lg">
                               <div className="card-body">
@@ -61,7 +31,6 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                             }}>
                                                                       <i className='bx bx-copy cursor-pointer text-secondary text-xl'></i>
                                                             </CopyToClipboard>
-                                                            <i className='bx bx-trash cursor-pointer text-error text-xl' onClick={deleteUrl}></i>
                                                   </div>
                                         </div>
                               </div>

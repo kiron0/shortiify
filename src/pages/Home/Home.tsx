@@ -46,37 +46,29 @@ export default function Home() {
                               }
                     };
 
-                    if (input === '') {
-                              toast.error('Please Enter URL..!');
-                              return;
-                    } else if (!user) {
+                    if (input === '' && !user) {
                               toast.error('Please Login to Shorten URL..!');
                               return;
-                    }
-                    else {
-                              // check if url already exists
-                              const res = await fetch(`${BASE_API}/user/urls?uid=${localStorage.getItem('uid')}`, {
-                                        method: 'GET',
+                    } else {
+                              const res = await fetch(`${BASE_API}/user/urls/dup/q?url=${input}`, {
                                         headers: {
                                                   'Content-Type': 'application/json',
                                                   authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                                         },
                               });
                               const data = await res.json();
-                              const urls = data;
-                              const urlExists = urls?.find((url: any) => url?.url === input);
-                              if (urlExists) {
+                              if (data?.url || data.length > 0) {
                                         Swal.fire({
                                                   icon: 'error',
-                                                  title: 'Oops...',
-                                                  text: 'URL Already Exists, Check Your Dashboard..!',
+                                                  title: 'Already Exists!',
+                                                  text: `URL: ${input}. Shorten: ${window.location.href}k/${data?.slug}. Please try another URL.`,
                                                   confirmButtonText: 'Ok, Got it!',
                                         });
                                         return;
-                              } else if (input === '') {
+                              } else if (input === '' && user) {
                                         toast.error('Please Enter URL..!');
                                         return;
-                              } else if (!urlExists && input !== '' && !urlError && !user) {
+                              } else if (!data && input !== '' && !urlError && !user) {
                                         toast.error('Please Login to Shorten URL..!');
                                         return;
                               } else {
@@ -107,17 +99,17 @@ export default function Home() {
                                                   toast.error('Please Enter URL..!');
                                         }
                               }
+
                     }
           }
 
           return (
                     <div className='mt-12 md:mt-24'>
                               <div className='text-center text-white flex flex-col gap-2 justify-center items-center'>
-                                        <h1 className='text-2xl md:text-5xl'>Shorten your <span className='text-secondary'>loooooong</span> URLs</h1>
-                                        <h1 className='text-2xl md:text-5xl'>like never before!</h1>
-                                        <p className='text-sm md:text-md'>Copy your long URL. Paste it below. Then You got it, right?</p>
+                                        <h1 className='text-2xl md:text-5xl font-bold'>Shorten your <span className='text-primary'>loooooong</span> URLs</h1>
+                                        <h1 className='text-2xl md:text-5xl font-bold'>like never before!</h1>
+                                        <p className='text-xs md:text-md'>Copy your long URL. Paste it below. Then 🎇 You got it, right?</p>
                               </div>
-
                               <div>
                                         <form onSubmit={submitForm}>
                                                   <div className="form-control w-full max-w-lg flex mx-auto mt-12">
@@ -125,15 +117,15 @@ export default function Home() {
                                                                       <span className="label-text text-white">Your Long URL</span>
                                                             </label>
                                                             <div className='flex flex-col md:flex-row justify-center items-center gap-3'>
-                                                                      <input type="text" name='URL' placeholder="Type/Paste your URL" onChange={handleURLError} className={`input w-full max-w-xs bg-transparent border-1 border-white text-white ${urlError && "border-error shadow-error outline-error"}`} autoComplete='off' />
-                                                                      <button className={`btn ${urlError ? 'btn-disabled cursor-not-allowed' : ''}`}>Shorten URL</button>
+                                                                      <input type="text" name='URL' placeholder="Type/Paste your URL" onChange={handleURLError} className={`input w-full max-w-xs bg-transparent border-1 border-white text-white lowercase ${urlError && "border-error shadow-error outline-error"}`} autoComplete='off' />
+                                                                      <button className={`btn btn-primary text-white ${urlError ? 'btn-disabled cursor-not-allowed' : ''}`}>Shorten URL</button>
                                                             </div>
                                                             {urlError && (
                                                                       <small className="flex flex-col pt-2 text-error px-9 md:px-6">
                                                                                 {urlError}
                                                                       </small>
                                                             )}
-                                                            <p className='text-white text-center mt-3 text-xs'>React, Redux & Typescript powered URL Shortener</p>
+                                                            <p className='text-white text-center mt-3 text-xs'>React, Redux & Typescript powered URL Shortener 🔥</p>
                                                   </div>
                                         </form>
                               </div>

@@ -7,6 +7,7 @@ import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 import avatar from "../../../assets/avatar.jpg";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import { useNavigate } from "react-router-dom";
 
 type UserRowProps = {
   user: {
@@ -25,6 +26,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
   useScrollToTop();
   const { theme } = useContext(InitializeContext);
   const { _id, email, role, uid, image, displayName } = user;
+  const navigate = useNavigate();
 
   /* Handle Delete User */
   const handleUserDelete = (id: any) => {
@@ -194,6 +196,26 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
           <span className="badge badge-error text-white">Active </span>
         ) : (
           ""
+        )}
+      </td>
+      <td>
+        {email === "toufiqhasankiron2@gmail.com" ||
+          auth?.currentUser?.uid === uid ? (
+          <span className="tooltip tooltip-secondary" data-tip="See your URLs!">
+            <button
+              onClick={() => navigate(`/dashboard/allLinks`)}
+              className="btn btn-sm btn-secondary text-white">
+              <i className='bx bxs-happy-heart-eyes' ></i>
+            </button>
+          </span>
+        ) : (
+          <span className="tooltip tooltip-secondary" data-tip="See their URLs!">
+            <button
+              onClick={() => navigate(`/dashboard/user/urls/${uid}`)}
+              className="btn btn-sm btn-secondary text-white">
+              <i className='bx bxs-happy-heart-eyes' ></i>
+            </button>
+          </span>
         )}
       </td>
       <td>

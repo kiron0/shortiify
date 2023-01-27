@@ -13,7 +13,6 @@ const useToken = (user: any) => {
       displayName: displayName,
       uid: uid,
       image: auth?.currentUser?.photoURL,
-      urls: [],
     };
     if (email) {
       fetch(

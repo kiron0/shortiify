@@ -34,7 +34,6 @@ export default function Navbar() {
   const handleLogOut = () => {
     signOut(auth);
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("uid");
     toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
       position: "top-center",
     });
@@ -44,7 +43,7 @@ export default function Navbar() {
     <div className={`sticky top-0 z-50 duration-300 ${scrollY > 30 ? "bg-neutral shadow-md" : "bg-transparent"}`}>
       <div className="navbar w-full container mx-auto">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl text-white" href='/'><i className='bx bx-expand text-3xl text-secondary mr-3' ></i>{appName}</a>
+          <a className="btn btn-ghost normal-case text-xl text-white" href='/'><i className='bx bx-expand text-3xl text-primary mr-3' ></i>{appName}</a>
         </div>
         <div>
           {!user && (

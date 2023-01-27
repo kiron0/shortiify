@@ -13,14 +13,15 @@ export default function Redirect() {
                     const fetchLinkDoc = () => {
                               const uid = localStorage.getItem("uid");
                               if (!slug || slug.length !== 6 || uid === undefined) return setLoading(false);
-                              axios.get(`${BASE_API}/user/urls?uid=${uid}&&slug=${slug}`, {
+                              axios.get(`${BASE_API}/users/urls?slug=${slug}`, {
                                         headers: {
                                                   authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                                         },
                               }).then(data => {
-                                        if (data?.data) {
-                                                  const url = data?.data?.find((item: any) => item.slug === slug);
-                                                  window.location.href = url?.url;
+                                        if (data.data) {
+                                                  const urlObj = data.data.url;
+                                                  if (!urlObj) return setLoading(false);
+                                                  window.location.href = urlObj;
                                         }
                               }).catch(err => {
                                         setLoading(false);

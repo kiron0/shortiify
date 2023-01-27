@@ -21,7 +21,6 @@ const Dashboard = () => {
   const handleLogOut = async () => {
     await signOut(auth).then(() => {
       navigate("/");
-      localStorage.removeItem("uid");
       localStorage.removeItem("accessToken");
       toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
         position: "top-center",
@@ -52,7 +51,7 @@ const Dashboard = () => {
               to="/"
               className="text-xl md:text-2xl font-semibold text-primary"
             >
-              {appName}
+              {appName} <small className="text-sm">- URL Shortener</small>
             </Link>
             <h1 className="text-lg md:text-2xl font-semibold hidden md:flex">
               {admin ? "Admin" : "User"} Panel
@@ -201,6 +200,14 @@ const Dashboard = () => {
                 >
                   <i className="bx bx-cog text-xl"></i> Setting
                 </NavLink>
+              </li>
+              <li className="absolute bottom-5 w-72">
+                <button
+                  onClick={handleLogOut}
+                  className="bg-gray-700 rounded-lg text-white"
+                >
+                  <i className="bx bx-log-out"></i> Logout
+                </button>
               </li>
             </>
           )}

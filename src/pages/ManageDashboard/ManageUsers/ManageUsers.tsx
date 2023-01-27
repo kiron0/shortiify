@@ -44,6 +44,7 @@ const ManageUsers = () => {
                 <th>Change User Role</th>
                 <th>Role</th>
                 <th>isLogin</th>
+                <th>All URLs</th>
                 <th>Actions</th>
               </tr>
             </thead>
