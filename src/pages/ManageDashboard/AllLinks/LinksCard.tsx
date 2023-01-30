@@ -4,6 +4,8 @@ import { toast } from 'react-hot-toast'
 import Swal from "sweetalert2";
 import { BASE_API } from '../../../config'
 import Loader from '../../../components/Loader/Loader'
+import { FiCopy } from 'react-icons/fi';
+import { FaRegEye } from 'react-icons/fa';
 
 type Props = {
           item: any,
@@ -48,22 +50,23 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                     <div className="card w-full shadow-lg bg-[url('./assets/bg.jpg')]">
                               <div className="card-body">
                                         <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
-                                        <a className='text-primary' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <i className='bx bx-link-external'></i></a>
+                                        <p><a className='text-primary' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <i className='bx bx-link-external'></i></a></p>
                                         <div className='flex justify-center items-center'>
-                                                  <p className='text-white'>{item?.createdAt}</p>
+                                                  <p className='flex items-center gap-2 text-white'><FaRegEye className='text-lg' />{item?.views || 0} Views</p>
 
                                                   <div className='flex items-center gap-3'>
-                                                            <CopyToClipboard text={`${window.location.origin}/k/${item?.slug}`} onCopy={() => {
+                                                            <CopyToClipboard text={`${window.location.href}k/${item?.slug}`} onCopy={() => {
                                                                       toast.success('URL Copied To Clipboard..!', {
                                                                                 icon: "✋",
                                                                                 duration: 3000,
                                                                       });
                                                             }}>
-                                                                      <i className='bx bx-copy cursor-pointer text-primary text-xl'></i>
+                                                                      <FiCopy className='text-primary text-xl cursor-pointer' />
                                                             </CopyToClipboard>
                                                             <i className='bx bx-trash cursor-pointer text-error text-xl' onClick={deleteUrl}></i>
                                                   </div>
                                         </div>
+                                        <p className='text-white'>{item?.createdAt}</p>
                               </div>
                     </div>
           )

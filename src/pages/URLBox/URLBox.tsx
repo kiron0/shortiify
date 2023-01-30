@@ -4,6 +4,8 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import auth from '../../auth/Firebase/firebase.init'
 import { useQuery } from '@tanstack/react-query'
 import { BASE_API } from '../../config'
+import { FaRegEye } from 'react-icons/fa'
+import { FiCopy } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -47,7 +49,7 @@ export default function URLBox() {
                                                                                                                                                       <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                                                                                                                                       <a className='text-primary' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <i className='bx bx-link-external'></i></a>
                                                                                                                                                       <div className='flex justify-center items-center'>
-                                                                                                                                                                <p>{item?.createdAt}</p>
+                                                                                                                                                                <p className='flex items-center gap-2'><FaRegEye className='text-lg' />{item?.views || 0} Views</p>
 
                                                                                                                                                                 <div className='flex items-center gap-3'>
                                                                                                                                                                           <CopyToClipboard text={`${window.location.href}k/${item?.slug}`} onCopy={() => {
@@ -56,10 +58,11 @@ export default function URLBox() {
                                                                                                                                                                                               duration: 3000,
                                                                                                                                                                                     });
                                                                                                                                                                           }}>
-                                                                                                                                                                                    <i className='bx bx-copy cursor-pointer text-secondary text-xl'></i>
+                                                                                                                                                                                    <FiCopy className='text-secondary text-xl cursor-pointer' />
                                                                                                                                                                           </CopyToClipboard>
                                                                                                                                                                 </div>
                                                                                                                                                       </div>
+                                                                                                                                                      <p>{item?.createdAt}</p>
                                                                                                                                             </div>
                                                                                                                                   </div>
                                                                                                                         )

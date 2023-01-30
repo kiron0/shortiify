@@ -42,6 +42,7 @@ export default function Home() {
                               urls: {
                                         slug: nanoid(6),
                                         url: input,
+                                        views: 0,
                                         createdAt: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
                               }
                     };
