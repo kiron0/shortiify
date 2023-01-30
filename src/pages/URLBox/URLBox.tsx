@@ -42,7 +42,7 @@ export default function URLBox() {
                                                                                                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto'>
                                                                                                               {urlsData?.urls?.slice(-3).reverse().map((item: any, index: number) => {
                                                                                                                         return (
-                                                                                                                                  <div className="card w-[350px] bg-neutral shadow-xl text-white" key={index}>
+                                                                                                                                  <div className="card w-[350px] bg-[url('./assets/bg.jpg')] shadow-xl text-white" key={index}>
                                                                                                                                             <div className="card-body">
                                                                                                                                                       <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                                                                                                                                       <a className='text-primary' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <i className='bx bx-link-external'></i></a>
@@ -69,7 +69,7 @@ export default function URLBox() {
                                                                                                     {
                                                                                                               urlsData?.urls?.length > 3 ? (
                                                                                                                         <div className='pt-6 md:pt-10'>
-                                                                                                                                  <Link to="/dashboard/allLinks"><button className='btn btn-primary text-white'>See All</button></Link>
+                                                                                                                                  <Link to="/dashboard/allLinks"><button className="btn bg-[url('./assets/bg.jpg')] text-white">See All Links</button></Link>
                                                                                                                         </div>
                                                                                                               ) : null
                                                                                                     }

@@ -45,12 +45,12 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
           )
 
           return (
-                    <div className="card w-full bg-base-100 shadow-lg">
+                    <div className="card w-full shadow-lg bg-[url('./assets/bg.jpg')]">
                               <div className="card-body">
-                                        <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
-                                        <a className='text-secondary' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <i className='bx bx-link-external'></i></a>
+                                        <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
+                                        <a className='text-primary' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <i className='bx bx-link-external'></i></a>
                                         <div className='flex justify-center items-center'>
-                                                  <p>{item?.createdAt}</p>
+                                                  <p className='text-white'>{item?.createdAt}</p>
 
                                                   <div className='flex items-center gap-3'>
                                                             <CopyToClipboard text={`${window.location.origin}/k/${item?.slug}`} onCopy={() => {
@@ -59,7 +59,7 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                                                 duration: 3000,
                                                                       });
                                                             }}>
-                                                                      <i className='bx bx-copy cursor-pointer text-secondary text-xl'></i>
+                                                                      <i className='bx bx-copy cursor-pointer text-primary text-xl'></i>
                                                             </CopyToClipboard>
                                                             <i className='bx bx-trash cursor-pointer text-error text-xl' onClick={deleteUrl}></i>
                                                   </div>

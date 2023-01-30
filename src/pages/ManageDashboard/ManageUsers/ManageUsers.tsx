@@ -8,7 +8,7 @@ import UserRow from "./UserRow";
 
 const Fade = require("react-reveal/Fade");
 
-const ManageUsers = () => {
+export default function ManageUsers() {
   useScrollToTop();
   useTitle("Manage All Users");
   const {
@@ -27,15 +27,15 @@ const ManageUsers = () => {
     return <Loader />;
   }
   return (
-    <div className="lg:px-10 py-0 md:py-8 bg-base-100 rounded-md pb-12">
+    <div className="lg:px-10 py-0 md:py-8 rounded-md pb-12">
       <div className="title my-2 mb-10">
-        <h3 className="text-2xl font-semibold">Manage Users</h3>
-        <span>You can manage all the users whom are already registered</span>
+        <h3 className="text-2xl font-semibold text-white">Manage Users</h3>
+        <span className="text-white">You can manage all the users whom are already registered</span>
       </div>
       <Fade top distance="20px">
         <div className="overflow-x-auto shadow-xl rounded-xl">
           <table className="table w-full">
-            <thead className="bg-base-300">
+            <thead>
               <tr>
                 <th>No</th>
                 <th>Image</th>
@@ -44,7 +44,6 @@ const ManageUsers = () => {
                 <th>Change User Role</th>
                 <th>Role</th>
                 <th>isLogin</th>
-                <th>All URLs</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -64,5 +63,3 @@ const ManageUsers = () => {
     </div>
   );
 };
-
-export default ManageUsers;

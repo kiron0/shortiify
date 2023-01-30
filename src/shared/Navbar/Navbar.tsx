@@ -40,7 +40,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className={`sticky top-0 z-50 duration-300 ${scrollY > 30 ? "bg-neutral shadow-md" : "bg-transparent"}`}>
+    <div className={`sticky top-0 z-50 duration-300 ${scrollY > 30 ? "bg-[url('./assets/bg.jpg')] shadow-md" : "bg-transparent"}`}>
       <div className="navbar w-full container mx-auto">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl text-white" href='/'><i className='bx bx-expand text-3xl text-primary mr-3' ></i>{appName}</a>
@@ -82,7 +82,7 @@ export default function Navbar() {
               </label>
               <ul
                 tabIndex={0}
-                className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-neutral text-white rounded-box w-72"
+                className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-[url('./assets/bg.jpg')] text-white rounded-box w-72"
               >
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
                   {auth?.currentUser?.photoURL ? (

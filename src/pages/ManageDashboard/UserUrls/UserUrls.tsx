@@ -37,27 +37,31 @@ export default function UserUrls() {
                     <Fade top distance="20px">
                               <div className='pb-10'>
                                         <div className="title mt-3 md:mt-8 md:mx-8">
-                                                  <h3 className="text-2xl font-semibold">Manage URLs of <span className='text-primary cursor-pointer' onClick={() => navigate(-1)}>{urlsData?.displayName?.split(' ').slice(0, -1).join(' ')}</span></h3>
-                                                  <span>You can manage all the URLs whom are already created</span>
+                                                  <h3 className="text-2xl font-semibold text-white">Manage URLs of <span className='text-primary cursor-pointer' onClick={() => navigate(-1)}>{urlsData?.displayName?.split(' ').slice(0, -1).join(' ')}</span></h3>
+                                                  <span className='text-white'>You can manage all the URLs whom are already created</span>
                                         </div>
 
-                                        <div className='flex justify-center mx-auto'>
-                                                  <div className='card w-full md:w-[450px] bg-primary shadow-xl text-white mt-2'>
-                                                            <div className="card-body">
-                                                                      <figure>
-                                                                                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                                                          <img
-                                                                                                    src={urlsData?.image as string}
-                                                                                                    alt="profile"
-                                                                                                    className="w-full h-full rounded-full"
-                                                                                          />
+                                        {
+                                                  isLoading ? (<Loader />) : (
+                                                            <div className='flex justify-center mx-auto'>
+                                                                      <div className="card w-full md:w-[450px] bg-[url('./assets/bg.jpg')] shadow-xl text-white mt-2">
+                                                                                <div className="card-body">
+                                                                                          <figure>
+                                                                                                    <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                                                                              <img
+                                                                                                                        src={urlsData?.image as string}
+                                                                                                                        alt="profile"
+                                                                                                                        className="w-full h-full rounded-full"
+                                                                                                              />
+                                                                                                    </div>
+                                                                                          </figure>
+                                                                                          <p className='card-title mx-auto'>{urlsData?.displayName}</p>
+                                                                                          <p className='text-center'>{urlsData?.email}</p>
                                                                                 </div>
-                                                                      </figure>
-                                                                      <p className='card-title mx-auto'>{urlsData?.displayName}</p>
-                                                                      <p className='text-center'>{urlsData?.email}</p>
+                                                                      </div>
                                                             </div>
-                                                  </div>
-                                        </div>
+                                                  )
+                                        }
                                         {
                                                   urlsData?.urls?.length > 0 ? (
                                                             <div className='mt-8 md:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>

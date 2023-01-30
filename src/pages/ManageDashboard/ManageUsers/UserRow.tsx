@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { InitializeContext } from "../../../App";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
-import avatar from "../../../assets/avatar.jpg";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import { useNavigate } from "react-router-dom";
 
@@ -117,20 +116,25 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
     <tr>
       <th>{index + 1}</th>
       <td>
-        {image ? (
-          <a href={image} target="_blank" rel="noreferrer">
+        {email === "toufiqhasankiron2@gmail.com" ||
+          auth?.currentUser?.uid === uid ? (
+          <span className="tooltip tooltip-right tooltip-secondary cursor-pointer" data-tip="See your URLs!">
             <img
               src={image}
               alt=""
               className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm bg-base-200 border p-1"
+              onClick={() => navigate(`/dashboard/allLinks`)}
             />
-          </a>
+          </span>
         ) : (
-          <img
-            src={avatar}
-            alt=""
-            className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm bg-base-200 border p-1"
-          />
+          <span className="tooltip tooltip-right tooltip-secondary cursor-pointer" data-tip="See their URLs!">
+            <img
+              src={image}
+              alt=""
+              className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm bg-base-200 border p-1"
+              onClick={() => navigate(`/dashboard/user/urls/${uid}`)}
+            />
+          </span>
         )}
       </td>
       <td className="select-none">
@@ -196,26 +200,6 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
           <span className="badge badge-error text-white">Active </span>
         ) : (
           ""
-        )}
-      </td>
-      <td>
-        {email === "toufiqhasankiron2@gmail.com" ||
-          auth?.currentUser?.uid === uid ? (
-          <span className="tooltip tooltip-secondary" data-tip="See your URLs!">
-            <button
-              onClick={() => navigate(`/dashboard/allLinks`)}
-              className="btn btn-sm btn-secondary text-white">
-              <i className='bx bxs-happy-heart-eyes' ></i>
-            </button>
-          </span>
-        ) : (
-          <span className="tooltip tooltip-secondary" data-tip="See their URLs!">
-            <button
-              onClick={() => navigate(`/dashboard/user/urls/${uid}`)}
-              className="btn btn-sm btn-secondary text-white">
-              <i className='bx bxs-happy-heart-eyes' ></i>
-            </button>
-          </span>
         )}
       </td>
       <td>

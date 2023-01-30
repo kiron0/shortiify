@@ -27,8 +27,8 @@ export default function AllLinks() {
           return (
                     <div>
                               <div className="title mt-3 md:mt-8 md:mx-8">
-                                        <h3 className="text-2xl font-semibold">Manage URLs</h3>
-                                        <span>You can manage all the URLs whom are already created</span>
+                                        <h3 className="text-2xl font-semibold text-white">Manage URLs</h3>
+                                        <span className='text-white'>You can manage all the URLs whom are already created</span>
                               </div>
                               {
                                         urlsData?.urls?.length > 0 ? (

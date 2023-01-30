@@ -50,11 +50,13 @@ export default function Home() {
                               toast.error('Please Login to Shorten URL..!');
                               return;
                     } else {
-                              const res = await fetch(`${BASE_API}/user/urls/dup/q?url=${input}`, {
+                              const res = await fetch(`${BASE_API}/user/urls/dup/q`, {
                                         headers: {
                                                   'Content-Type': 'application/json',
                                                   authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                                         },
+                                        method: 'POST',
+                                        body: JSON.stringify({ url: input }),
                               });
                               const data = await res.json();
                               if (data?.url || data.length > 0) {
@@ -64,6 +66,7 @@ export default function Home() {
                                                   text: `URL: ${input}. Shorten: ${window.location.href}k/${data?.slug}. Please try another URL.`,
                                                   confirmButtonText: 'Ok, Got it!',
                                         });
+                                        form.URL.value = '';
                                         return;
                               } else if (input === '' && user) {
                                         toast.error('Please Enter URL..!');

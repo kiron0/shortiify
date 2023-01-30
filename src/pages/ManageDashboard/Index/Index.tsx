@@ -7,7 +7,7 @@ export default function Index() {
   return (
     <div className="flex justify-center items-center h-[80vh] hero-content flex-col">
       <div className="lg:flex lg:mx-auto">
-        <h2 className="text-3xl text-center lg:flex lg:gap-2">
+        <h2 className="text-3xl text-center lg:flex lg:gap-2 text-white">
           Welcome To Dashboard,{" "}
           <span className="block lg:flex text-primary">
             {auth?.currentUser?.displayName}

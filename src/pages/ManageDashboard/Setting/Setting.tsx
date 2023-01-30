@@ -58,12 +58,12 @@ export default function Setting() {
   return (
     <>
       <div>
-        <div className="p-5 my-4 bg-base-100 font-poppins">
-          <h3 className="text-2xl font-bold mb-3">Settings</h3>
+        <div className="p-5 my-4 font-poppins">
+          <h3 className="text-2xl font-bold mb-3 text-white">Settings</h3>
 
           <div className="settings-content">
             {admin && (
-              <div className="flex flex-col sm:flex-row items-center justify-between py-6 rounded my-4 bg-gray-50 px-5">
+              <div className="flex flex-col sm:flex-row items-center justify-between py-6 rounded my-4 text-white px-5">
                 <h2 className="text-xl font-bold pb-3 md:pb-0">
                   Change App Name
                 </h2>
@@ -77,7 +77,7 @@ export default function Setting() {
                       onChange={(e) => setInput(e.target.value)}
                       defaultValue={appName}
                       placeholder="Change App Name"
-                      className="input input-bordered input-sm"
+                      className="input input-bordered border-1 border-white input-sm bg-transparent"
                       autoComplete="off"
                     />
                   ) : (
@@ -96,7 +96,7 @@ export default function Setting() {
                         className="cursor-pointer text-error font-bold text-2xl"
                         onClick={() => setIsEdit(false)}
                       >
-                        <i className='bx bx-revision'></i>
+                        <i className="bx bx-x text-2xl"></i>
                       </span>
                     </>
                   ) : (

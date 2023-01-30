@@ -8,7 +8,7 @@ export default function ThemeChanger() {
 
   const handleThemeChange = (e: any) => {
     setTheme(e.target.value);
-    window.localStorage.setItem("theme", e.target.value);
+    window.localStorage.setItem("shortenerTheme", e.target.value);
   };
 
   return (
@@ -22,8 +22,8 @@ export default function ThemeChanger() {
 
       <input type="checkbox" id="themeChanger" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box relative">
-          <h3 className="text-lg font-bold flex items-center gap-1">
+        <div className="modal-box relative bg-[url('./assets/bg2.jpg')]">
+          <h3 className="text-lg font-bold flex items-center gap-1 text-white">
             <i className={`bx bx-cog text-lg ${styles.themeBtn}`}></i>Choose
             your theme from here
           </h3>
@@ -32,26 +32,26 @@ export default function ThemeChanger() {
               <h3 className="text-xs font-poppins">Theme Chooser</h3>
             </div>
             <div className="input-group flex items-center my-2 border p-3 rounded-md mt-2 max-w-md overflow-hidden">
-              <div className="icon">
+              <div className="icon text-white">
                 <i className="bx bxs-hot"></i>
               </div>
               <select
-                className="select w-full max-w-sm md:ml-2 capitalize"
+                className="select w-full text-white max-w-sm md:ml-2 capitalize bg-transparent"
                 name="theme"
                 onChange={handleThemeChange}
-                defaultValue={theme}
+                value={theme ? theme : "night"}
               >
-                <option disabled selected>
+                <option disabled selected className="text-black">
                   Choose your theme
                 </option>
                 {themeOptions.map((option, index: number) => (
-                  <option value={option.value} key={index}>{option.label}</option>
+                  <option value={option.value} key={index} className="text-black">{option.label}</option>
                 ))}
               </select>
             </div>
           </div>
 
-          <div className="pt-3 font-semibold">
+          <div className="pt-3 font-semibold text-white">
             <p>
               Current theme:{" "}
               <span className="capitalize btn btn-xs btn-primary cursor-default no-animation text-white">

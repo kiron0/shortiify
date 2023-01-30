@@ -68,6 +68,10 @@ const router = createBrowserRouter(
           element: <RequireAdmin>
             <Setting />
           </RequireAdmin>
+        },
+        {
+          path: "*",
+          element: <NotFound />
         }
       ]
     },
@@ -84,7 +88,7 @@ function App() {
   const [theme, setTheme] = useState<string>("night");
 
   useEffect(() => {
-    setTheme(window.localStorage.getItem("theme") || "night");
+    setTheme(localStorage.getItem("shortenerTheme") || "night");
   }, []);
 
   const { data, refetch, isLoading } = useQuery(["appName"], async () => {
@@ -94,7 +98,6 @@ function App() {
 
   const appName = data?.appName;
 
-  // disabled right click
   useEffect(() => {
     // document.addEventListener("contextmenu", (e) => {
     //   e.preventDefault();
@@ -105,7 +108,7 @@ function App() {
   return (
     <>
       <InitializeContext.Provider value={{ appName, theme, setTheme, refetch, isLoading }}>
-        <div data-theme={theme ? theme : "light"}>
+        <div data-theme={theme ? theme : "night"}>
           <RouterProvider router={router} />
           <Toaster />
           <ThemeChanger />

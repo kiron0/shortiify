@@ -12,7 +12,7 @@ export default function Root() {
   const [user] = useAuthState(auth);
   return (
     <>
-      <div className={`bg-[url('https://cdn.wallpapersafari.com/11/60/n4FGfr.jpg')] ${user ? "pb-52 md:pb-72 lg:pb-80" : "h-screen bg-no-repeat"}`}>
+      <div className={`bg-[url('./assets/bg2.jpg')] ${user ? "pb-52 md:pb-72 lg:pb-80" : "h-screen bg-no-repeat"}`}>
         <Navbar />
         <Home />
         <Footer />
