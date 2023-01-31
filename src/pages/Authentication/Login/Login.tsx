@@ -7,6 +7,7 @@ import auth from "../../../auth/Firebase/firebase.init";
 import useTitle from "../../../hooks/useTitle";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import Preloader from "../../../shared/Preloader/Preloader";
+import { BiHomeHeart } from "react-icons/bi";
 import { InitializeContext } from "../../../App";
 
 const Login = () => {
@@ -20,18 +21,14 @@ const Login = () => {
   let from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    if (token) {
+    if (token || from === "/login" || auth?.currentUser?.email) {
       navigate(from, { replace: true });
-      toast.success(`Welcome to ${appName}, ${auth?.currentUser?.displayName}`);
+      toast.success(`Welcome to ${appName} - URL Shortener, ${auth?.currentUser?.displayName}`);
     }
   }, [token, navigate, from, appName]);
 
   if (gLoading) {
     return <Preloader />;
-  }
-
-  if (token) {
-    navigate(from, { replace: true });
   }
 
   return (
@@ -44,6 +41,13 @@ const Login = () => {
             className="btn btn-outline border-white text-white flex items-center justify-center rounded-full hover:bg-white duration-500 gap-2 hover:text-black w-full"
           >
             <i className="bx bxl-google text-2xl"></i>Continue with Google
+          </button>
+
+          <button
+            onClick={() => navigate("/")}
+            className="btn btn-outline border-white mt-6 text-white flex items-center justify-center rounded-full hover:bg-white duration-500 gap-2 hover:text-black w-full"
+          >
+            <BiHomeHeart className="text-2xl" /> Go Back to Home
           </button>
         </div>
       </div>

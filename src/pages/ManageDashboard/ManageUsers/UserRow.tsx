@@ -116,8 +116,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
     <tr>
       <th>{index + 1}</th>
       <td>
-        {email === "toufiqhasankiron2@gmail.com" ||
-          auth?.currentUser?.uid === uid ? (
+        {auth?.currentUser?.uid === uid ? (
           <span className="tooltip tooltip-right tooltip-secondary cursor-pointer" data-tip="See your URLs!">
             <img
               src={image}

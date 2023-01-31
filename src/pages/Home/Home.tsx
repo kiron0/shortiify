@@ -7,7 +7,7 @@ import { BASE_API } from '../../config';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { InitializeContext } from '../../App';
 import Swal from 'sweetalert2';
-import Loader from '../../components/Loader/Loader';
+import { ClipLoader, ScaleLoader } from 'react-spinners';
 
 export default function Home() {
           const { refetch } = useContext(InitializeContext);
@@ -122,7 +122,10 @@ export default function Home() {
                                                             </label>
                                                             <div className='flex flex-col md:flex-row justify-center items-center gap-3'>
                                                                       <input type="text" name='URL' placeholder="Type/Paste your URL" onChange={handleURLError} className={`input w-full max-w-xs bg-transparent border-1 border-white text-white lowercase ${urlError && "border-error shadow-error outline-error"}`} autoComplete='off' />
-                                                                      <button className={`btn btn-primary text-white ${urlError ? 'btn-disabled cursor-not-allowed' : ''}`}>Shorten URL</button>
+                                                                      <button className={`btn btn-primary text-white ${urlError ? 'btn-disabled cursor-not-allowed' : ''}`}>{loading ? <ClipLoader loading={loading}
+                                                                                color="#fff"
+                                                                                size={20}
+                                                                      /> : "Shorten URL"}</button>
                                                             </div>
                                                             {urlError && (
                                                                       <small className="flex flex-col pt-2 text-error px-9 md:px-6">
@@ -137,7 +140,7 @@ export default function Home() {
                               {
                                         loading ? (
                                                   <div className='flex flex-col justify-center items-center h-[30vh] md:h-[40vh]'>
-                                                            <Loader />
+                                                            <ScaleLoader color="#fff" />
                                                   </div>
                                         ) : (
                                                   <URLBox />
