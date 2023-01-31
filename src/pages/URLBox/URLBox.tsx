@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { BASE_API } from '../../config'
 import { FaRegEye } from 'react-icons/fa'
 import { BsClipboard } from 'react-icons/bs'
+import { FiExternalLink } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Loader from '../../components/Loader/Loader'
@@ -59,7 +60,7 @@ export default function URLBox() {
                                                                                                                                   <div className="card w-full bg-[url('./assets/bg.jpg')] shadow-xl text-white" key={index}>
                                                                                                                                             <div className="card-body">
                                                                                                                                                       <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
-                                                                                                                                                      <a className='text-primary' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <i className='bx bx-link-external'></i></a>
+                                                                                                                                                      <a className='text-primary flex items-center gap-2' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <FiExternalLink /></a>
                                                                                                                                                       <div className='flex justify-center items-center'>
                                                                                                                                                                 <p className='flex items-center gap-2'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
                                                                                                                                                                 <div className='flex items-center gap-3'>

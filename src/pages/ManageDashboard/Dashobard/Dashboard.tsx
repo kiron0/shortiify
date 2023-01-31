@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import URL from "../../../assets/url.png";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { MdSpaceDashboard } from "react-icons/md";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import Loader from "../../../components/Loader/Loader";
 import useAdmin from "../../../hooks/useAdmin";
@@ -38,9 +39,9 @@ const Dashboard = () => {
         <div className="header z-50 sticky top-0 flex justify-between items-center bg-[url('./assets/bg.jpg')] shadow-lg p-4 rounded-xl">
           <label
             htmlFor="dashboard-sidebar"
-            className="btn btn-outline border-primary drawer-button lg:hidden text-white"
+            className="btn btn-outline btn-primary border-primary drawer-button lg:hidden text-white"
           >
-            <i className='bx bx-grid-alt text-3xl rounded-lg'></i>
+            <MdSpaceDashboard className="text-2xl text-white" />
           </label>
           <div className="flex items-center gap-1 text-white">
             <h1 className="text-lg md:text-2xl font-semibold hidden md:flex">

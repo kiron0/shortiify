@@ -41,8 +41,8 @@ export default function Navbar() {
   return (
     <div className={`sticky top-0 z-50 duration-300 ${scrollY > 30 ? "bg-[url('./assets/bg.jpg')] shadow-md" : "bg-transparent"}`}>
       <div className="navbar w-full container mx-auto">
-        <div className="flex-1 items-center">
-          <a className="btn btn-ghost normal-case text-xl text-white" href='/'><img src={URL} alt="" className="w-11 md:w-12 lg:w-16 mr-2" />{appName}</a>
+        <div className="flex-1 items-center -ml-4 md:ml-0">
+          <a className="btn btn-ghost normal-case text-xl text-white" href='/'><img src={URL} alt="" className="w-11 md:w-12 lg:w-16" />{appName}</a>
         </div>
         <div>
           {!user && (

@@ -16,7 +16,6 @@ import { BASE_API } from './config';
 import Setting from './pages/ManageDashboard/Setting/Setting';
 import AllLinks from './pages/ManageDashboard/AllLinks/AllLinks';
 import ManageUsers from './pages/ManageDashboard/ManageUsers/ManageUsers';
-import ThemeChanger from './shared/ThemeChanger/ThemeChanger';
 import UserUrls from './pages/ManageDashboard/UserUrls/UserUrls';
 
 const router = createBrowserRouter(
@@ -111,7 +110,6 @@ function App() {
         <div data-theme={theme ? theme : "night"}>
           <RouterProvider router={router} />
           <Toaster />
-          <ThemeChanger />
         </div>
       </InitializeContext.Provider>
     </>

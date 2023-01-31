@@ -4,6 +4,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import { toast } from 'react-hot-toast'
 import { FaRegEye } from 'react-icons/fa'
 import { BsClipboard } from 'react-icons/bs'
+import { FiExternalLink } from 'react-icons/fi'
 
 type Props = {
           item: any,
@@ -26,7 +27,7 @@ export default function UrlsCard({ item, refetch, isLoading }: Props) {
                     <div className="card w-full bg-[url('./assets/bg.jpg')] shadow-lg">
                               <div className="card-body">
                                         <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
-                                        <p><a className='text-primary' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <i className='bx bx-link-external'></i></a></p>
+                                        <p><a className='text-primary flex items-center gap-2' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <FiExternalLink /></a></p>
                                         <div className='flex justify-center items-center'>
                                                   <p className='flex items-center gap-2 text-white'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
 

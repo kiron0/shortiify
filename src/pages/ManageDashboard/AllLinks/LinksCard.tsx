@@ -6,6 +6,7 @@ import { BASE_API } from '../../../config'
 import Loader from '../../../components/Loader/Loader'
 import { FaRegEye } from 'react-icons/fa';
 import { BsClipboard } from 'react-icons/bs';
+import { FiExternalLink } from 'react-icons/fi';
 
 type Props = {
           item: any,
@@ -55,7 +56,7 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                     <div className="card w-full shadow-lg bg-[url('./assets/bg.jpg')]">
                               <div className="card-body">
                                         <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
-                                        <p><a className='text-primary' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <i className='bx bx-link-external'></i></a></p>
+                                        <p><a className='text-primary flex items-center gap-2' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <FiExternalLink /></a></p>
                                         <div className='flex justify-center items-center'>
                                                   <p className='flex items-center gap-2 text-white'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
 
