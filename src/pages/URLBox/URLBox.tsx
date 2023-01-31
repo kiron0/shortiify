@@ -5,15 +5,18 @@ import auth from '../../auth/Firebase/firebase.init'
 import { useQuery } from '@tanstack/react-query'
 import { BASE_API } from '../../config'
 import { FaRegEye } from 'react-icons/fa'
-import { FiCopy } from 'react-icons/fi'
+import { BsClipboard } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Loader from '../../components/Loader/Loader'
 
 export default function URLBox() {
           const [user] = useAuthState(auth);
           const uid = localStorage.getItem("uid");
+
           const {
                     data: urlsData,
+                    isLoading: urlsLoading,
           } = useQuery(["urls"], () =>
                     fetch(`${BASE_API}/user?uid=${uid}`, {
                               headers: {
@@ -27,6 +30,15 @@ export default function URLBox() {
                               return data;
                     })
           );
+
+          // Add commas or spaces to group every three digits
+          const numberWithCommas = (x: number) => {
+                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          }
+
+          if (urlsLoading) return (
+                    <Loader />
+          )
 
           return (
                     <div className='mt-12 md:mt-24'>
@@ -44,13 +56,12 @@ export default function URLBox() {
                                                                                                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto'>
                                                                                                               {urlsData?.urls?.slice(-3).reverse().map((item: any, index: number) => {
                                                                                                                         return (
-                                                                                                                                  <div className="card w-[350px] bg-[url('./assets/bg.jpg')] shadow-xl text-white" key={index}>
+                                                                                                                                  <div className="card w-full bg-[url('./assets/bg.jpg')] shadow-xl text-white" key={index}>
                                                                                                                                             <div className="card-body">
                                                                                                                                                       <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                                                                                                                                       <a className='text-primary' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <i className='bx bx-link-external'></i></a>
                                                                                                                                                       <div className='flex justify-center items-center'>
-                                                                                                                                                                <p className='flex items-center gap-2'><FaRegEye className='text-lg' />{item?.views || 0} Views</p>
-
+                                                                                                                                                                <p className='flex items-center gap-2'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
                                                                                                                                                                 <div className='flex items-center gap-3'>
                                                                                                                                                                           <CopyToClipboard text={`${window.location.href}k/${item?.slug}`} onCopy={() => {
                                                                                                                                                                                     toast.success('URL Copied To Clipboard..!', {
@@ -58,7 +69,7 @@ export default function URLBox() {
                                                                                                                                                                                               duration: 3000,
                                                                                                                                                                                     });
                                                                                                                                                                           }}>
-                                                                                                                                                                                    <FiCopy className='text-secondary text-xl cursor-pointer' />
+                                                                                                                                                                                    <BsClipboard className='text-primary text-lg cursor-pointer' />
                                                                                                                                                                           </CopyToClipboard>
                                                                                                                                                                 </div>
                                                                                                                                                       </div>

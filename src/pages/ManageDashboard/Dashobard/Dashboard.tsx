@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
-// import todo from "../../../assets/todo.png";
+import URL from "../../../assets/url.png";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ const Dashboard = () => {
             </h1>
             <Link
               to="/"
-              className="text-xl md:text-2xl font-semibold text-primary"
+              className="text-xl md:text-2xl font-semibold md:text-primary"
             >
               {appName} <small className="text-sm">- URL Shortener</small>
             </Link>
@@ -146,7 +146,7 @@ const Dashboard = () => {
               to="/"
               className="logo font-semibold text-center flex items-center flex-col gap-2 text-white"
             >
-              <img src="https://k-task.vercel.app/static/media/todo.03598633f860857f67d2.png" alt="" className="w-16" /> {appName}
+              <img src={URL} alt="" className="w-16" /> {appName}
               <p className="text-sm">A URL Shortener Web App</p>
             </Link>
             <div

@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
 import LinksCard from './LinksCard';
 import { Link } from 'react-router-dom';
+import Loading from '../../../components/Loading/Loading';
 
 export default function AllLinks() {
           const uid = localStorage.getItem("uid");
@@ -24,6 +25,11 @@ export default function AllLinks() {
                               return data;
                     })
           );
+
+          if (isLoading) return (
+                    <Loading />
+          )
+
           return (
                     <div>
                               <div className="title mt-3 md:mt-8 md:mx-8">

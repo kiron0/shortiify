@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import useProfileImage from "../../hooks/useProfileImage";
 import auth from "../../auth/Firebase/firebase.init";
-// import useAdmin from "../../hooks/useAdmin";
+import URL from "../../assets/url.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
+import { AiOutlineLink } from 'react-icons/ai'
 import { InitializeContext } from "../../App";
 
 export default function Navbar() {
@@ -15,8 +16,6 @@ export default function Navbar() {
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
   const [scrollY, setScrollY] = useState() as any;
-  // const { pathname } = useLocation();
-  // const [admin] = useAdmin(user);
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -42,8 +41,8 @@ export default function Navbar() {
   return (
     <div className={`sticky top-0 z-50 duration-300 ${scrollY > 30 ? "bg-[url('./assets/bg.jpg')] shadow-md" : "bg-transparent"}`}>
       <div className="navbar w-full container mx-auto">
-        <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl text-white" href='/'><i className='bx bx-expand text-3xl text-primary mr-3' ></i>{appName}</a>
+        <div className="flex-1 items-center">
+          <a className="btn btn-ghost normal-case text-xl text-white" href='/'><img src={URL} alt="" className="w-11 md:w-12 lg:w-16 mr-2" />{appName}</a>
         </div>
         <div>
           {!user && (
@@ -108,11 +107,11 @@ export default function Navbar() {
                     User ID: <span className="font-semibold">USER-{auth?.currentUser?.uid?.slice(0, 6)}</span>
                   </p>
 
-                  {/* <Link to="/dashboard/profile"> */}
-                  <button className="btn btn-outline mt-4 rounded-full text-white">
-                    View Profile
-                  </button>
-                  {/* </Link> */}
+                  <Link to="/dashboard/me">
+                    <button className="btn btn-outline mt-4 rounded-full text-white hover:bg-primary">
+                      View Profile
+                    </button>
+                  </Link>
                 </div>
                 <hr className="font-semibold" />
                 <li className="py-1 font-semibold">
@@ -123,6 +122,16 @@ export default function Navbar() {
                     to="/dashboard"
                   >
                     <i className="bx bxs-dashboard"></i> Dashboard
+                  </NavLink>
+                </li>
+                <li className="py-1 font-semibold">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? "text-white bg-primary" : ""
+                    }
+                    to="/dashboard/allLinks"
+                  >
+                    <AiOutlineLink className="text-lg" /> Your URLs
                   </NavLink>
                 </li>
                 <li className="py-1">

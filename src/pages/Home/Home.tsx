@@ -7,7 +7,7 @@ import { BASE_API } from '../../config';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { InitializeContext } from '../../App';
 import Swal from 'sweetalert2';
-import Loading from '../../shared/Loading/Loading';
+import Loader from '../../components/Loader/Loader';
 
 export default function Home() {
           const { refetch } = useContext(InitializeContext);
@@ -137,7 +137,7 @@ export default function Home() {
                               {
                                         loading ? (
                                                   <div className='flex flex-col justify-center items-center h-[30vh] md:h-[40vh]'>
-                                                            <Loading />
+                                                            <Loader />
                                                   </div>
                                         ) : (
                                                   <URLBox />
