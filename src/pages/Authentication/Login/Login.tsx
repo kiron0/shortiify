@@ -6,9 +6,9 @@ import useToken from "../../../hooks/useToken";
 import auth from "../../../auth/Firebase/firebase.init";
 import useTitle from "../../../hooks/useTitle";
 import useScrollToTop from "../../../hooks/useScrollToTop";
-import Preloader from "../../../shared/Preloader/Preloader";
 import { BiHomeHeart } from "react-icons/bi";
 import { InitializeContext } from "../../../App";
+import { ScaleLoader } from "react-spinners";
 
 const Login = () => {
   useScrollToTop();
@@ -28,7 +28,11 @@ const Login = () => {
   }, [token, navigate, from, appName]);
 
   if (gLoading) {
-    return <Preloader />;
+    return (
+      <div className="h-screen bg-[url('./assets/bg.jpg')] flex justify-center items-center">
+        <ScaleLoader color="#fff" />
+      </div>
+    );
   }
 
   return (

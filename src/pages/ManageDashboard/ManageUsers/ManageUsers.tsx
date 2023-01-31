@@ -3,14 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import useTitle from "../../../hooks/useTitle";
-import Loader from "../../../components/Loader/Loader";
 import UserRow from "./UserRow";
+import Loading from "../../../components/Loading/Loading";
 
 const Fade = require("react-reveal/Fade");
 
 export default function ManageUsers() {
   useScrollToTop();
   useTitle("Manage All Users");
+
+
   const {
     data: users,
     isLoading,
@@ -23,9 +25,13 @@ export default function ManageUsers() {
       },
     }).then((res) => res.json())
   );
+
+
   if (isLoading || !users || !users.length) {
-    return <Loader />;
+    return <Loading />;
   }
+
+
   return (
     <div className="lg:px-10 py-0 md:py-8 rounded-md pb-12">
       <div className="title my-2 mb-10">

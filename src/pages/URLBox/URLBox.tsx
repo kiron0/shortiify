@@ -62,7 +62,7 @@ export default function URLBox() {
                                                                                                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto'>
                                                                                                               {urlsData?.urls?.slice(-3).reverse().map((item: any, index: number) => {
                                                                                                                         return (
-                                                                                                                                  <div className="card w-[370px] bg-[url('./assets/bg.jpg')] shadow-xl text-white" key={index}>
+                                                                                                                                  <div className="card w-full md:w-[370px] bg-[url('./assets/bg.jpg')] shadow-xl text-white" key={index}>
                                                                                                                                             <div className="card-body">
                                                                                                                                                       <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                                                                                                                                       <a className='text-primary flex items-center gap-2' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <FiExternalLink /></a>
@@ -96,8 +96,8 @@ export default function URLBox() {
                                                                                           </div>
                                                                                 </>
                                                                       ) : (
-                                                                                <div className='flex justify-center items-center mt-10'>
-                                                                                          <div className="card w-[370px] bg-[url('./assets/bg2.jpg')] border-2 shadow-xl text-white">
+                                                                                <div className='flex justify-center items-center mt-10 px-3 md:px-0'>
+                                                                                          <div className="card w-full md:w-[370px] bg-[url('./assets/bg2.jpg')] border-2 shadow-xl text-white">
                                                                                                     <div className="card-body">
                                                                                                               <p className='text-center'>No URLs found!</p>
                                                                                                     </div>
@@ -107,8 +107,8 @@ export default function URLBox() {
                                                             }
                                                   </span>
                                         ) : (
-                                                  <div className='flex justify-center items-center mt-6'>
-                                                            <div className="card w-[370px] bg-[url('./assets/bg2.jpg')] border-2 shadow-xl text-white">
+                                                  <div className='flex justify-center items-center mt-6 px-3 md:px-0'>
+                                                            <div className="card w-full md:w-[370px] bg-[url('./assets/bg2.jpg')] border-2 shadow-xl text-white">
                                                                       <div className="card-body">
                                                                                 <p className='text-center'>Please login to view your URLs!</p>
                                                                       </div>

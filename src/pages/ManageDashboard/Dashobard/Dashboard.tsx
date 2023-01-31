@@ -5,11 +5,11 @@ import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MdSpaceDashboard } from "react-icons/md";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import Loader from "../../../components/Loader/Loader";
 import useAdmin from "../../../hooks/useAdmin";
 import useProfileImage from "../../../hooks/useProfileImage";
 import auth from "../../../auth/Firebase/firebase.init";
 import { InitializeContext } from "../../../App";
+import Loading from "../../../components/Loading/Loading";
 
 const Dashboard = () => {
   const { appName } = useContext(InitializeContext);
@@ -29,7 +29,7 @@ const Dashboard = () => {
   };
 
   if (isLoading || adminLoading) {
-    return <Loader />;
+    return <Loading />;
   }
 
   return (

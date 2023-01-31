@@ -68,7 +68,7 @@ const Profile = () => {
 
   const [userInfo] = useUserInfo();
 
-  if (isLoading || loading)
+  if (isLoading || loading || !userInfo)
     return (
       <div className="md:p-80">
         <Loader />

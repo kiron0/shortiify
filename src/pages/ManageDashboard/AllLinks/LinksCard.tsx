@@ -3,10 +3,10 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import { toast } from 'react-hot-toast'
 import Swal from "sweetalert2";
 import { BASE_API } from '../../../config'
-import Loader from '../../../components/Loader/Loader'
 import { FaRegEye } from 'react-icons/fa';
 import { BsClipboard } from 'react-icons/bs';
 import { FiExternalLink } from 'react-icons/fi';
+import Loading from '../../../components/Loading/Loading';
 
 type Props = {
           item: any,
@@ -49,7 +49,7 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
           }
 
           if (isLoading) return (
-                    <Loader />
+                    <Loading />
           )
 
           return (
