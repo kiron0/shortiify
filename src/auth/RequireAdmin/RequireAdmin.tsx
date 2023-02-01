@@ -16,13 +16,13 @@ const RequireAdmin = ({ children }: Props) => {
   const location = useLocation();
 
   if (loading || adminLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
   if (!user || !admin) {
     signOut(auth);
     localStorage.removeItem("accessToken");
-    return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+    return <Navigate to="/getStarted" state={{ from: location }} replace></Navigate>;
   }
   return children;
 };

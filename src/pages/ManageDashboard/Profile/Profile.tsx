@@ -17,9 +17,11 @@ import { BASE_API } from "../../../config";
 import Loader from "../../../components/Loader/Loader";
 import auth from "../../../auth/Firebase/firebase.init";
 import useUserInfo from "../../../hooks/useUserInfo";
+import useTitle from "../../../hooks/useTitle";
 // import { useAuthState } from "react-firebase-hooks/auth";
 
 const Profile = () => {
+  useTitle("Profile")
   useScrollToTop();
   const { appName, isLoading, refetch } = useContext(InitializeContext);
   const [editProfile, setEditProfile] = useState(null as any);

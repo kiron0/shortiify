@@ -6,7 +6,7 @@ import useTitle from '../hooks/useTitle';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../auth/Firebase/firebase.init';
 import Footer from '../shared/Footer/Footer';
-import ThemeChanger from '../shared/ThemeChanger/ThemeChanger';
+import ScrollButton from '../shared/ScrollButton/ScrollButton';
 
 export default function Root() {
   useTitle("Home")
@@ -17,7 +17,7 @@ export default function Root() {
         <Navbar />
         <Home />
         <Footer />
-        <ThemeChanger />
+        <ScrollButton />
       </div>
       <Outlet />
     </>

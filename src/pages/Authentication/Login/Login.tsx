@@ -12,7 +12,7 @@ import { ScaleLoader } from "react-spinners";
 
 const Login = () => {
   useScrollToTop();
-  useTitle("Login");
+  useTitle("Get Started");
   const { appName } = useContext(InitializeContext);
   const [signInWithGoogle, gUser, gLoading] = useSignInWithGoogle(auth);
   const [token] = useToken(gUser);
@@ -21,7 +21,7 @@ const Login = () => {
   let from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    if (token || from === "/login" || auth?.currentUser?.email) {
+    if (token || from === "/getStarted" || auth?.currentUser?.email) {
       navigate(from, { replace: true });
       toast.success(`Welcome to ${appName} - URL Shortener, ${auth?.currentUser?.displayName}`);
     }
@@ -39,7 +39,7 @@ const Login = () => {
     <div className="bg-[url('./assets/bg.jpg')] h-screen justify-center items-center flex w-full">
       <div className="card w-full max-w-md">
         <div className="card-body">
-          <h2 className="text-center text-white text-4xl font-bold pb-6">Login</h2>
+          <h2 className="text-center text-white text-4xl font-bold pb-6">Let's Get Started..!</h2>
           <button
             onClick={() => signInWithGoogle()}
             className="btn btn-outline border-white text-white flex items-center justify-center rounded-full hover:bg-white duration-500 gap-2 hover:text-black w-full"

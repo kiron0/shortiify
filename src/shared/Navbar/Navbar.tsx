@@ -8,11 +8,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { AiOutlineLink } from 'react-icons/ai'
+import { RxRocket } from 'react-icons/rx'
 import { InitializeContext } from "../../App";
 
 export default function Navbar() {
   useScrollToTop();
-  const { appName } = useContext(InitializeContext);
+  const { appName, theme, handleThemeChange } = useContext(InitializeContext);
   const [user] = useAuthState(auth);
   const [image] = useProfileImage(user);
   const [scrollY, setScrollY] = useState() as any;
@@ -42,15 +43,15 @@ export default function Navbar() {
     <div className={`sticky top-0 z-50 duration-300 ${scrollY > 30 ? "bg-[url('./assets/bg.jpg')] shadow-md" : "bg-transparent"}`}>
       <div className="navbar w-full container mx-auto">
         <div className="flex-1 items-center -ml-4 md:ml-0">
-          <a className="btn btn-ghost normal-case text-xl text-white" href='/'><img src={URL} alt="" className="w-11 md:w-12 lg:w-16 md:mr-2" />{appName}</a>
+          <a className="btn btn-ghost normal-case text-xl md:text-2xl text-white" href='/'><img src={URL} alt="" className="w-11 md:w-12 md:mr-2" />{appName}</a>
         </div>
         <div>
           {!user && (
             <NavLink
-              to="/login"
+              to="/getStarted"
               className="btn flex gap-2 items-center btn-primary text-white"
             >
-              <i className='bx bx-log-in' ></i> Login
+              <RxRocket /> Get Started
             </NavLink>
           )}
         </div>
@@ -83,6 +84,15 @@ export default function Navbar() {
                 tabIndex={0}
                 className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-[url('./assets/bg.jpg')] text-white rounded-box w-72"
               >
+                <span className="absolute top-2 right-2 cursor-pointer" onClick={handleThemeChange}>
+                  {
+                    theme ? (
+                      <i className="bx bx-sun"></i>
+                    ) : (
+                      <i className="bx bx-moon"></i>
+                    )
+                  }
+                </span>
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
                   {auth?.currentUser?.photoURL ? (
                     <img
@@ -108,7 +118,7 @@ export default function Navbar() {
                   </p>
 
                   <Link to="/dashboard/me">
-                    <button className="btn btn-outline mt-4 rounded-full text-white hover:bg-primary">
+                    <button className="btn btn-outline mt-4 rounded-full text-white hover:text-white hover:bg-primary">
                       View Profile
                     </button>
                   </Link>
@@ -129,7 +139,7 @@ export default function Navbar() {
                     className={({ isActive }) =>
                       isActive ? "text-white bg-primary" : ""
                     }
-                    to="/dashboard/allLinks"
+                    to="/dashboard/allUrls"
                   >
                     <AiOutlineLink className="text-lg" /> Your URLs
                   </NavLink>

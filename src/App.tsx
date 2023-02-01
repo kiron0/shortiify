@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Toaster } from "react-hot-toast";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Toaster } from "react-hot-toast";
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { BASE_API } from './config';
 import Root from './Layouts/Root';
 import NotFound from './shared/NotFound/NotFound';
 import Redirect from './pages/Redirect/Redirect';
@@ -10,11 +13,8 @@ import Profile from './pages/ManageDashboard/Profile/Profile';
 import Login from './pages/Authentication/Login/Login';
 import RequireAuth from './auth/RequireAuth/RequireAuth';
 import RequireAdmin from './auth/RequireAdmin/RequireAdmin';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { BASE_API } from './config';
 import Setting from './pages/ManageDashboard/Setting/Setting';
-import AllLinks from './pages/ManageDashboard/AllLinks/AllLinks';
+import AllUrls from './pages/ManageDashboard/AllUrls/AllUrls';
 import ManageUsers from './pages/ManageDashboard/ManageUsers/ManageUsers';
 import UserUrls from './pages/ManageDashboard/UserUrls/UserUrls';
 
@@ -25,7 +25,7 @@ const router = createBrowserRouter(
       element: <Root />
     },
     {
-      path: "/login",
+      path: "/getStarted",
       element: <Login />
     },
     {
@@ -47,8 +47,8 @@ const router = createBrowserRouter(
           element: <Profile />
         },
         {
-          path: "/dashboard/allLinks",
-          element: <AllLinks />
+          path: "/dashboard/allUrls",
+          element: <AllUrls />
         },
         {
           path: "/dashboard/allUsers",
@@ -84,11 +84,12 @@ const router = createBrowserRouter(
 export const InitializeContext = createContext(null as any);
 
 function App() {
-  const [theme, setTheme] = useState<string>("night");
+  const [theme, setTheme] = useState<string>("false");
 
-  useEffect(() => {
-    setTheme(localStorage.getItem("shortenerTheme") || "night");
-  }, []);
+  const handleThemeChange = () => {
+    setTheme(!theme as any);
+    window.localStorage.setItem("shortenerTheme", (!theme).toString());
+  };
 
   const { data, refetch, isLoading } = useQuery(["appName"], async () => {
     const res = await axios.get(`${BASE_API}/app/appName`);
@@ -98,16 +99,14 @@ function App() {
   const appName = data?.appName;
 
   useEffect(() => {
-    // document.addEventListener("contextmenu", (e) => {
-    //   e.preventDefault();
-    // });
+    setTheme(JSON.parse(window.localStorage.getItem("shortenerTheme") || "false"));
     window.localStorage.getItem("uid");
   }, [refetch]);
 
   return (
     <>
-      <InitializeContext.Provider value={{ appName, theme, setTheme, refetch, isLoading }}>
-        <div data-theme={theme ? theme : "night"}>
+      <InitializeContext.Provider value={{ appName, theme, handleThemeChange, setTheme, refetch, isLoading }}>
+        <div data-theme={theme ? "night" : "emerald"}>
           <RouterProvider router={router} />
           <Toaster />
         </div>

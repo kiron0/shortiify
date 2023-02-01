@@ -48,7 +48,12 @@ export default function Home() {
                     };
 
                     if (input === '' && !user) {
-                              toast.error('Please Login to Shorten URL..!');
+                              Swal.fire({
+                                        icon: 'error',
+                                        title: 'Login Required!',
+                                        text: `Please Login to Shorten URL..!`,
+                                        confirmButtonText: 'Ok, Got it!',
+                              });
                               return;
                     } else {
                               const res = await fetch(`${BASE_API}/user/urls/dup/q`, {
@@ -70,10 +75,20 @@ export default function Home() {
                                         form.URL.value = '';
                                         return;
                               } else if (input === '' && user) {
-                                        toast.error('Please Enter URL..!');
+                                        Swal.fire({
+                                                  icon: 'error',
+                                                  title: 'Empty URL!',
+                                                  text: `Please Enter URL to Shorten.`,
+                                                  confirmButtonText: 'Ok, Got it!',
+                                        });
                                         return;
                               } else if (!data && input !== '' && !urlError && !user) {
-                                        toast.error('Please Login to Shorten URL..!');
+                                        Swal.fire({
+                                                  icon: 'error',
+                                                  title: 'Login Required!',
+                                                  text: `Please Login to Shorten URL..!`,
+                                                  confirmButtonText: 'Ok, Got it!',
+                                        });
                                         return;
                               } else {
                                         if (input !== '' && !urlError && user) {
@@ -89,7 +104,14 @@ export default function Home() {
                                                   });
                                                   const data = await res.json();
                                                   if (data.success) {
-                                                            toast.success('Shortened Successfully..!');
+                                                            toast.success('URL Shortened Successfully..!', {
+                                                                      duration: 4000,
+                                                                      style: {
+                                                                                padding: '1rem',
+                                                                                background: '#333',
+                                                                                color: '#fff',
+                                                                      },
+                                                            });
                                                             setLoading(false);
                                                             form.URL.value = '';
                                                             refetch();
@@ -98,9 +120,19 @@ export default function Home() {
                                                             setLoading(false);
                                                   }
                                         } else if (!user || input !== '') {
-                                                  toast.error('Please Login to Shorten URL..!');
+                                                  Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Login Required!',
+                                                            text: `Please Login to Shorten URL.`,
+                                                            confirmButtonText: 'Ok, Got it!',
+                                                  });
                                         } else {
-                                                  toast.error('Please Enter URL..!');
+                                                  Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Empty URL!',
+                                                            text: `Please Enter URL to Shorten.`,
+                                                            confirmButtonText: 'Ok, Got it!',
+                                                  });
                                         }
                               }
 

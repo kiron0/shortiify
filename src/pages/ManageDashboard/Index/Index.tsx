@@ -1,8 +1,10 @@
 import React from 'react'
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import auth from "../../../auth/Firebase/firebase.init";
+import useTitle from '../../../hooks/useTitle';
 
 export default function Index() {
+  useTitle("Welcome")
   useScrollToTop();
   return (
     <div className="flex justify-center items-center h-[80vh] hero-content flex-col">

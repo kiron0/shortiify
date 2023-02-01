@@ -5,8 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 import LinksCard from './LinksCard';
 import { Link } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
+import useTitle from '../../../hooks/useTitle';
+import useScrollToTop from '../../../hooks/useScrollToTop';
 
-export default function AllLinks() {
+export default function AllUrls() {
+          useTitle("Manage All URLs")
+          useScrollToTop();
           const uid = localStorage.getItem("uid");
           const {
                     data: urlsData = [],
@@ -47,7 +51,7 @@ export default function AllLinks() {
                                                   </div>
                                         ) : (
                                                   <div className='flex justify-center items-center mt-6'>
-                                                            <div className='card w-[350px] bg-neutral shadow-xl text-white'>
+                                                            <div className='card w-full md:w-[370px] bg-[url("./assets/bg2.jpg")] border-2 shadow-xl text-white'>
                                                                       <div className="card-body">
                                                                                 <p className='text-center'>No URLs found!</p>
                                                                       </div>

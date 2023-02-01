@@ -53,7 +53,7 @@ export default function Redirect() {
                                                   <span></span>
                                                   <span></span>
                                         </div>
-                                        <h1>Redirecting</h1>
+                                        <h1>Redirecting...</h1>
 
                               </div>
                     )

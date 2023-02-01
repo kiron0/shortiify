@@ -10,6 +10,7 @@ import useProfileImage from "../../../hooks/useProfileImage";
 import auth from "../../../auth/Firebase/firebase.init";
 import { InitializeContext } from "../../../App";
 import Loading from "../../../components/Loading/Loading";
+import { AiOutlineLink } from "react-icons/ai";
 
 const Dashboard = () => {
   const { appName } = useContext(InitializeContext);
@@ -116,7 +117,7 @@ const Dashboard = () => {
                 </div>
                 <div className="flex justify-center">
                   <Link to="/dashboard/me" className="hidden md:flex">
-                    <button className="btn btn-primary mt-4 rounded-full text-white">
+                    <button className="btn btn-outline mt-4 rounded-full text-white hover:text-white hover:bg-primary">
                       View Profile
                     </button>
                   </Link>
@@ -173,9 +174,9 @@ const Dashboard = () => {
               className={({ isActive }) =>
                 isActive ? "text-white bg-primary" : "text-white"
               }
-              to="/dashboard/allLinks"
+              to="/dashboard/allUrls"
             >
-              <i className="bx bx-list-ul text-xl"></i> Manage All URLs
+              <AiOutlineLink className="text-lg" /> Manage All URLs
             </NavLink>
           </li>
           {admin && (

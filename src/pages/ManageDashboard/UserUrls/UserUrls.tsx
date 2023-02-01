@@ -73,7 +73,7 @@ export default function UserUrls() {
                                                             </div>
                                                   ) : (
                                                             <div className='flex justify-center items-center mt-6'>
-                                                                      <div className='card w-[350px] bg-neutral shadow-xl text-white'>
+                                                                      <div className='card w-full md:w-[370px] bg-[url("./assets/bg2.jpg")] border-2 shadow-xl text-white'>
                                                                                 <div className="card-body">
                                                                                           <p className='text-center'>No URLs found!</p>
                                                                                 </div>
