@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { toast } from 'react-hot-toast'
 import Swal from "sweetalert2";
 import { BASE_API } from '../../../config'
 import { FaRegEye } from 'react-icons/fa';
 import { BsClipboard } from 'react-icons/bs';
-import { FiExternalLink } from 'react-icons/fi';
 import Loading from '../../../components/Loading/Loading';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 type Props = {
           item: any,
@@ -15,6 +16,14 @@ type Props = {
 }
 
 export default function LinksCard({ item, refetch, isLoading }: Props) {
+          const [isEdit, setIsEdit] = useState<boolean>(false);
+          const [input, setInput] = useState(item?.slug);
+          const { setValue } = useForm();
+
+          useEffect(() => {
+                    setValue("slug", item?.slug);
+          }, [setValue, item?.slug]);
+
           const deleteUrl = () => {
                     Swal.fire({
                               title: "Are you sure?",
@@ -43,6 +52,52 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
 
           }
 
+          const handleUpdateSlug = (e: React.SyntheticEvent) => {
+                    e.preventDefault();
+
+                    Swal.fire({
+                              title: "Are you sure?",
+                              text: "You won't be able to revert this!",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonText: "Yes, update it!",
+                    }).then((willDelete: any) => {
+                              if (willDelete.isConfirmed) {
+                                        if (input?.length !== 6) {
+                                                  toast.error("Slug must be 6 characters long");
+                                                  return;
+                                        } else if (input?.length > 6) {
+                                                  toast.error("Slug must be 6 characters long");
+                                                  return;
+                                        } else {
+                                                  fetch(`${BASE_API}/user/getSlug?slug=${input}`, {
+                                                            method: "GET",
+                                                  }).then((res) => res.json()).then((data) => {
+                                                            if (data?.message === "Slug already exists") {
+                                                                      Swal.fire({
+                                                                                title: "Slug already exists",
+                                                                                icon: "warning",
+                                                                                confirmButtonText: "Ok, Got it!",
+                                                                      })
+                                                                      return;
+                                                            } else if (data?.message === "Slug is available") {
+                                                                      axios.patch(`${BASE_API}/user/updateSlug?id=${item?._id}`, {
+                                                                                slug: input,
+                                                                      })
+                                                                                .then((data) => {
+                                                                                          toast.success(data.data.message);
+                                                                                          refetch();
+                                                                                          setIsEdit(false);
+                                                                                })
+                                                            } else {
+                                                                      toast.error("Something went wrong");
+                                                            }
+                                                  })
+                                        }
+                              }
+                    })
+          }
+
           // Add commas or spaces to group every three digits
           const numberWithCommas = (x: number) => {
                     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -56,12 +111,47 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                     <div className="card w-full shadow-lg bg-[url('./assets/bg.jpg')]">
                               <div className="card-body">
                                         <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
-                                        <p><a className='text-primary flex items-center gap-2' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug} <FiExternalLink /></a></p>
+                                        {isEdit ? (
+                                                  <div className='flex justify-center items-center gap-1'>
+                                                            <p>{window.location.origin}/k/</p>
+                                                            <form className='flex items-center justify-center' onSubmit={handleUpdateSlug}>
+                                                                      <input
+                                                                                type="text"
+                                                                                onChange={(e) => setInput(e.target.value)}
+                                                                                defaultValue={item?.slug}
+                                                                                placeholder=""
+                                                                                className="input input-bordered border-1 border-white input-sm bg-transparent w-full"
+                                                                                autoComplete="off"
+                                                                      />
+                                                                      <button
+                                                                                type="submit"
+                                                                                className="cursor-pointer text-primary font-bold text-2xl"
+                                                                      >
+                                                                                <i className='bx bx-check'></i>
+                                                                      </button>{" "}
+                                                                      <span
+                                                                                className="cursor-pointer text-error font-bold text-4xl"
+                                                                                onClick={() => setIsEdit(false)}
+                                                                      >
+                                                                                <i className="bx bx-x text-2xl"></i>
+                                                                      </span>
+                                                            </form>
+                                                  </div>
+                                        ) : (
+                                                  <div className='flex items-center'>
+                                                            <p><a className='text-primary flex items-center gap-2' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug}</a></p>
+                                                            <span
+                                                                      className="cursor-pointer text-primary font-bold"
+                                                                      onClick={() => setIsEdit(true)}
+                                                            >
+                                                                      <i className="bx bx-edit-alt text-xl"></i>
+                                                            </span>
+                                                  </div>
+                                        )}
                                         <div className='flex justify-center items-center'>
                                                   <p className='flex items-center gap-2 text-white'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
-
                                                   <div className='flex items-center gap-3'>
-                                                            <CopyToClipboard text={`${window.location.href}k/${item?.slug}`} onCopy={() => {
+                                                            <CopyToClipboard text={`${window.location.origin}/k/${item?.slug}`} onCopy={() => {
                                                                       toast.success('URL Copied To Clipboard..!', {
                                                                                 icon: "✋",
                                                                                 duration: 3000,

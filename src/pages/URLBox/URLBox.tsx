@@ -89,7 +89,7 @@ export default function URLBox() {
                                                                                                     {
                                                                                                               urlsData?.urls?.length > 3 && (
                                                                                                                         <div className='mt-6 md:mt-10'>
-                                                                                                                                  <Link to="/dashboard/allLinks"><button className="btn bg-[url('./assets/bg.jpg')] text-white">See All URL's</button></Link>
+                                                                                                                                  <Link to="/dashboard/allUrls"><button className="btn bg-[url('./assets/bg.jpg')] text-white">See All URL's</button></Link>
                                                                                                                         </div>
                                                                                                               )
                                                                                                     }

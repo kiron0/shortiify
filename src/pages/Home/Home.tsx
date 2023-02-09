@@ -40,6 +40,7 @@ export default function Home() {
                     // create a new object with id, url and previous object
                     const postURLs = {
                               urls: {
+                                        _id: nanoid(10),
                                         slug: nanoid(6),
                                         url: input,
                                         views: 0,

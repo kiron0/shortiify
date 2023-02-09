@@ -32,7 +32,7 @@ export default function UrlsCard({ item, refetch, isLoading }: Props) {
                                                   <p className='flex items-center gap-2 text-white'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
 
                                                   <div className='flex items-center gap-3'>
-                                                            <CopyToClipboard text={`${window.location.href}k/${item?.slug}`} onCopy={() => {
+                                                            <CopyToClipboard text={`${window.location.origin}/k/${item?.slug}`} onCopy={() => {
                                                                       toast.success('URL Copied To Clipboard..!', {
                                                                                 icon: "✋",
                                                                                 duration: 3000,
