@@ -117,7 +117,7 @@ const Dashboard = () => {
                 </div>
                 <div className="flex justify-center">
                   <Link to="/dashboard/me" className="hidden md:flex">
-                    <button className="btn btn-outline mt-4 rounded-full text-white hover:text-white hover:bg-primary">
+                    <button className="btn btn-outline mt-4 rounded-full text-white hover:text-white hover:bg-primary hover:border-primary">
                       View Profile
                     </button>
                   </Link>
@@ -132,7 +132,7 @@ const Dashboard = () => {
               <li className="py-1 text-white">
                 <button onClick={handleLogOut} className="font-semibold">
                   <i className="bx bx-log-out font-semibold"></i>
-                  Logout
+                  Sign Out
                 </button>
               </li>
             </ul>
@@ -209,7 +209,7 @@ const Dashboard = () => {
               onClick={handleLogOut}
               className="bg-transparent hover:bg-primary hover:border-primary border-2 border-white rounded-lg text-white duration-300"
             >
-              <i className="bx bx-log-out"></i> Logout
+              <i className="bx bx-log-out"></i> Sign Out
             </button>
           </li>
         </ul>

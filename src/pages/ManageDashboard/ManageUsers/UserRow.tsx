@@ -121,7 +121,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
             <img
               src={image}
               alt=""
-              className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm bg-base-200 border p-1"
+              className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm border-2 border-error p-1"
               onClick={() => navigate(`/dashboard/allLinks`)}
             />
           </span>
@@ -130,7 +130,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
             <img
               src={image}
               alt=""
-              className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm bg-base-200 border p-1"
+              className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm border p-1"
               onClick={() => navigate(`/dashboard/user/urls/${uid}`)}
             />
           </span>

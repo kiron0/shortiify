@@ -150,7 +150,7 @@ export default function Navbar() {
                     className="font-semibold"
                   >
                     <i className="bx bx-log-out font-semibold"></i>
-                    Logout
+                    Sign Out
                   </button>
                 </li>
               </ul>

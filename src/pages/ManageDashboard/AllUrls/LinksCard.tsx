@@ -63,15 +63,18 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                               confirmButtonText: "Yes, update it!",
                     }).then((willDelete: any) => {
                               if (willDelete.isConfirmed) {
-                                        if (input?.length !== 6) {
-                                                  toast.error("Slug must be 6 characters long");
+                                        if (input === "") {
+                                                  toast.error("Slug cannot be empty");
                                                   return;
-                                        } else if (input?.length > 6) {
+                                        } else if (input?.length !== 6) {
                                                   toast.error("Slug must be 6 characters long");
                                                   return;
                                         } else {
                                                   fetch(`${BASE_API}/user/getSlug?slug=${input}`, {
                                                             method: "GET",
+                                                            headers: {
+                                                                      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                                                            },
                                                   }).then((res) => res.json()).then((data) => {
                                                             if (data?.message === "Slug already exists") {
                                                                       Swal.fire({
@@ -83,6 +86,10 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                             } else if (data?.message === "Slug is available") {
                                                                       axios.patch(`${BASE_API}/user/updateSlug?id=${item?._id}`, {
                                                                                 slug: input,
+                                                                      }, {
+                                                                                headers: {
+                                                                                          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                                                                                },
                                                                       })
                                                                                 .then((data) => {
                                                                                           toast.success(data.data.message);
@@ -112,15 +119,14 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                               <div className="card-body">
                                         <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                         {isEdit ? (
-                                                  <div className='flex justify-center items-center gap-1'>
+                                                  <div className='flex justify-center items-center'>
                                                             <p>{window.location.origin}/k/</p>
-                                                            <form className='flex items-center justify-center' onSubmit={handleUpdateSlug}>
+                                                            <form className='flex items-center justify-center ml-1 lg:mr-4' onSubmit={handleUpdateSlug}>
                                                                       <input
                                                                                 type="text"
                                                                                 onChange={(e) => setInput(e.target.value)}
                                                                                 defaultValue={item?.slug}
-                                                                                placeholder=""
-                                                                                className="input input-bordered border-1 border-white input-sm bg-transparent w-full"
+                                                                                className="input input-bordered border-1 border-white input-sm bg-transparent w-full placeholder:text-white"
                                                                                 autoComplete="off"
                                                                       />
                                                                       <button
@@ -139,7 +145,7 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                   </div>
                                         ) : (
                                                   <div className='flex items-center'>
-                                                            <p><a className='text-primary flex items-center gap-2' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug}</a></p>
+                                                            <p><a className='text-primary flex items-center gap-2 w-48' href={`${window.location.origin}/k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/k/{item?.slug}</a></p>
                                                             <span
                                                                       className="cursor-pointer text-primary font-bold"
                                                                       onClick={() => setIsEdit(true)}
