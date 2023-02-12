@@ -106,7 +106,7 @@ function App() {
   return (
     <>
       <InitializeContext.Provider value={{ appName, theme, handleThemeChange, setTheme, refetch, isLoading }}>
-        <div data-theme={theme ? "night" : "emerald"}>
+        <div data-theme={theme ? "halloween" : "night"}>
           <RouterProvider router={router} />
           <Toaster />
         </div>

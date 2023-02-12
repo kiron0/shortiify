@@ -11,6 +11,7 @@ import ScrollButton from '../shared/ScrollButton/ScrollButton';
 export default function Root() {
   useTitle("Home")
   const [user] = useAuthState(auth);
+
   return (
     <>
       <div className={`bg-[url('./assets/bg2.jpg')] ${user ? "pb-52 md:pb-72 lg:pb-80" : "h-screen bg-no-repeat"}`}>

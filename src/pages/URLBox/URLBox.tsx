@@ -59,10 +59,10 @@ export default function URLBox() {
                                                                                                     <p className='text-xs md:text-lg'>Here are your shortened URLs! Now start rick-rolling your friends. 😆</p>
                                                                                           </div>
                                                                                           <div className='mt-8 md:mt-12 flex flex-col justify-center items-center'>
-                                                                                                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto'>
+                                                                                                    <div className='md:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                                                                                                               {urlsData?.urls?.slice(-3).reverse().map((item: any, index: number) => {
                                                                                                                         return (
-                                                                                                                                  <div className="card w-full md:w-[370px] bg-[url('./assets/bg.jpg')] shadow-xl text-white" key={index}>
+                                                                                                                                  <div className="card w-[355px] md:w-[370px] bg-[url('./assets/bg.jpg')] text-white" key={index}>
                                                                                                                                             <div className="card-body">
                                                                                                                                                       <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                                                                                                                                       <a className='text-primary flex items-center gap-2' href={`${window.location.href}k/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}k/{item?.slug} <FiExternalLink /></a>
@@ -70,7 +70,7 @@ export default function URLBox() {
                                                                                                                                                                 <p className='flex items-center gap-2'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
                                                                                                                                                                 <div className='flex items-center gap-3'>
                                                                                                                                                                           <CopyToClipboard text={`${window.location.href}k/${item?.slug}`} onCopy={() => {
-                                                                                                                                                                                    toast.success('URL Copied To Clipboard..!', {
+                                                                                                                                                                                    toast.success('Short URL Copied To Clipboard..!', {
                                                                                                                                                                                               icon: "✋",
                                                                                                                                                                                               duration: 3000,
                                                                                                                                                                                     });

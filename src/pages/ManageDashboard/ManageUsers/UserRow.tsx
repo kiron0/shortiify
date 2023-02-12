@@ -122,7 +122,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
               src={image}
               alt=""
               className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm border-2 border-error p-1"
-              onClick={() => navigate(`/dashboard/allLinks`)}
+              onClick={() => navigate(`/dashboard/allUrls`)}
             />
           </span>
         ) : (

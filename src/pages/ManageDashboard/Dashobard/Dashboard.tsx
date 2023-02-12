@@ -9,11 +9,11 @@ import useAdmin from "../../../hooks/useAdmin";
 import useProfileImage from "../../../hooks/useProfileImage";
 import auth from "../../../auth/Firebase/firebase.init";
 import { InitializeContext } from "../../../App";
-import Loading from "../../../components/Loading/Loading";
 import { AiOutlineLink } from "react-icons/ai";
+import Loading from "../../../components/Loading/Loading";
 
-const Dashboard = () => {
-  const { appName } = useContext(InitializeContext);
+const Dashboard: any = () => {
+  const { appName, theme, handleThemeChange } = useContext(InitializeContext);
   const [user, isLoading] = useAuthState(auth);
   const [admin, adminLoading] = useAdmin(user);
   const [image] = useProfileImage(user);
@@ -55,7 +55,7 @@ const Dashboard = () => {
               {appName} <small className="text-sm">- URL Shortener</small>
             </Link>
             <h1 className="text-lg md:text-2xl font-semibold hidden md:flex">
-              {admin ? "Admin" : "User"} Panel
+              {admin && auth?.currentUser?.email === "toufiqhasankiron2@gmail.com" ? "Developer" : admin ? "Admin" : "User"} Panel
             </h1>
           </div>
           <div className="dropdown dropdown-end">
@@ -81,6 +81,15 @@ const Dashboard = () => {
               tabIndex={0}
               className="mt-6 -mr-4 p-2 shadow-xl menu menu-compact dropdown-content rounded-box w-72 bg-[url('./assets/bg.jpg')]"
             >
+              <span className="absolute top-2 right-2 cursor-pointer" onClick={handleThemeChange}>
+                {
+                  theme ? (
+                    <input type="checkbox" className="toggle toggle-xs" checked />
+                  ) : (
+                    <input type="checkbox" className="toggle toggle-xs" />
+                  )
+                }
+              </span>
               <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto my-4 border ring ring-primary ring-offset-base-100 ring-offset-2">
                 {auth?.currentUser?.photoURL ? (
                   <img
@@ -108,11 +117,11 @@ const Dashboard = () => {
                   <h1 className="font-semibold">
                     Welcome to,{" "}
                     <span className="font-semibold text-primary">
-                      {appName}
+                      <Link to="/">{appName}</Link>
                     </span>
                   </h1>
                   <h1 className="font-semibold">
-                    {admin ? "Admin" : "User"} Panel
+                    {admin && auth?.currentUser?.email === "toufiqhasankiron2@gmail.com" ? "Developer" : admin ? "Admin" : "User"} Panel
                   </h1>
                 </div>
                 <div className="flex justify-center">

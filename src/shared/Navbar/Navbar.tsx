@@ -87,9 +87,9 @@ export default function Navbar() {
                 <span className="absolute top-2 right-2 cursor-pointer" onClick={handleThemeChange}>
                   {
                     theme ? (
-                      <i className="bx bx-sun"></i>
+                      <input type="checkbox" className="toggle toggle-xs" checked />
                     ) : (
-                      <i className="bx bx-moon"></i>
+                      <input type="checkbox" className="toggle toggle-xs" />
                     )
                   }
                 </span>

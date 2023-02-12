@@ -115,18 +115,18 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
           )
 
           return (
-                    <div className="card w-full shadow-lg bg-[url('./assets/bg.jpg')]">
+                    <div className="card w-full bg-[url('./assets/bg.jpg')]">
                               <div className="card-body">
                                         <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                         {isEdit ? (
                                                   <div className='flex justify-center items-center'>
-                                                            <p>{window.location.origin}/k/</p>
+                                                            <p className='text-gray-400'>{window.location.origin}/k/</p>
                                                             <form className='flex items-center justify-center ml-1 lg:mr-4' onSubmit={handleUpdateSlug}>
                                                                       <input
                                                                                 type="text"
                                                                                 onChange={(e) => setInput(e.target.value)}
                                                                                 defaultValue={item?.slug}
-                                                                                className="input input-bordered border-1 border-white input-sm bg-transparent w-full placeholder:text-white"
+                                                                                className="input input-bordered border-1 border-white input-sm bg-transparent w-full text-white"
                                                                                 autoComplete="off"
                                                                       />
                                                                       <button
@@ -136,7 +136,7 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                                                 <i className='bx bx-check'></i>
                                                                       </button>{" "}
                                                                       <span
-                                                                                className="cursor-pointer text-error font-bold text-4xl"
+                                                                                className="cursor-pointer text-error font-bold text-4xl pb-1"
                                                                                 onClick={() => setIsEdit(false)}
                                                                       >
                                                                                 <i className="bx bx-x text-2xl"></i>
