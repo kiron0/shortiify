@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import URLBox from '../URLBox/URLBox';
 import { toast } from 'react-hot-toast';
 import { nanoid } from 'nanoid';
@@ -14,6 +14,7 @@ export default function Home() {
           const [user] = useAuthState(auth);
           const [urlError, setUrlError] = useState<string>("");
           const [loading, setLoading] = useState<boolean>(false);
+          const [localURLs, setLocalURLs] = useState<any>(JSON.parse(localStorage.getItem('localURLs') || '[]'));
 
           const isValidURL = /^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(#[-a-z\d_]*)?$/i;
 
@@ -48,15 +49,47 @@ export default function Home() {
                               }
                     };
 
-                    if (input === '' && !user) {
+                    if (input === '') {
                               Swal.fire({
                                         icon: 'error',
-                                        title: 'Login Required!',
-                                        text: `Please Login to Shorten URL..!`,
+                                        title: 'Empty URL!',
+                                        text: `Please Enter URL to Shorten.`,
                                         confirmButtonText: 'Ok, Got it!',
                               });
                               return;
-                    } else {
+                    } else if (input && !user) {
+                              // set urls in local storage as an array
+                              const urls = JSON.parse(localStorage.getItem('localURLs') || '[]');
+                              // check if url already exists
+                              const urlExists = urls.find((url: any) => url.url === input);
+                              if (urlExists) {
+                                        Swal.fire({
+                                                  icon: 'error',
+                                                  title: 'Already Exists!',
+                                                  text: `URL: ${input}. Shorten: ${window.location.href}l/${urlExists.slug}. Please try another URL.`,
+                                                  confirmButtonText: 'Ok, Got it!',
+                                        });
+                                        form.URL.value = '';
+                                        return;
+                              } else {
+                                        // add new object to local storage
+                                        urls.push(postURLs.urls);
+                                        localStorage.setItem('localURLs', JSON.stringify(urls));
+                                        toast.success('URL Shortened Successfully..!', {
+                                                  duration: 4000,
+                                                  style: {
+                                                            padding: '1rem',
+                                                            background: '#333',
+                                                            color: '#fff',
+                                                  },
+                                        });
+                                        setLoading(false);
+                                        form.URL.value = '';
+                                        setLocalURLs(JSON.parse(localStorage.getItem('localURLs') || '[]'));
+                                        return;
+                              }
+                    }
+                    else {
                               const res = await fetch(`${BASE_API}/user/urls/dup/q`, {
                                         headers: {
                                                   'Content-Type': 'application/json',
@@ -140,6 +173,10 @@ export default function Home() {
                     }
           }
 
+          useEffect(() => {
+                    setLocalURLs(JSON.parse(localStorage.getItem('localURLs') || '[]'));
+          }, []);
+
           return (
                     <div className='mt-12 md:mt-24'>
                               <div className='text-center text-white flex flex-col gap-2 justify-center items-center'>
@@ -176,7 +213,7 @@ export default function Home() {
                                                             <ScaleLoader color="#fff" />
                                                   </div>
                                         ) : (
-                                                  <URLBox />
+                                                  <URLBox localURLs={localURLs} />
                                         )
                               }
                     </div>

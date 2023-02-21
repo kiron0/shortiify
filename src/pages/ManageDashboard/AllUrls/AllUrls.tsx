@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Loading from '../../../components/Loading/Loading';
 import useTitle from '../../../hooks/useTitle';
 import useScrollToTop from '../../../hooks/useScrollToTop';
+import Pagination from './Pagination';
 
 export default function AllUrls() {
           useTitle("Manage All URLs")
@@ -60,6 +61,12 @@ export default function AllUrls() {
                                                                       </div>
                                                             </div>
                                                   </div>
+                                        )
+                              }
+
+                              {
+                                        urlsData?.urls?.length > 0 && (
+                                                  <Pagination />
                                         )
                               }
                     </div>

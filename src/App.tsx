@@ -17,6 +17,8 @@ import Setting from './pages/ManageDashboard/Setting/Setting';
 import AllUrls from './pages/ManageDashboard/AllUrls/AllUrls';
 import ManageUsers from './pages/ManageDashboard/ManageUsers/ManageUsers';
 import UserUrls from './pages/ManageDashboard/UserUrls/UserUrls';
+import LocalURLs from './pages/LocalURLs/LocalURLs';
+import LocalRedirect from './pages/LocalRedirect/LocalRedirect';
 
 const router = createBrowserRouter(
   [
@@ -31,6 +33,14 @@ const router = createBrowserRouter(
     {
       path: "/k/:slug",
       element: <Redirect />
+    },
+    {
+      path: "/l/:slug",
+      element: <LocalRedirect />
+    },
+    {
+      path: "/local/allUrls",
+      element: <LocalURLs />
     },
     {
       path: "/dashboard",
