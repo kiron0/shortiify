@@ -1,33 +1,31 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { BASE_API } from '../../../config';
-import { toast } from 'react-hot-toast';
 import UrlsCard from './UrlsCard';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../../components/Loader/Loader';
+import axios from 'axios';
 
 const Fade = require("react-reveal/Fade");
 
 export default function UserUrls() {
           const { uid } = useParams();
           const navigate = useNavigate();
-          const {
-                    data: urlsData = [],
-                    isLoading,
-                    refetch,
-          } = useQuery(["urls"], () =>
-                    fetch(`${BASE_API}/user/urls/${uid}`, {
-                              headers: {
-                                        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                              },
-                    }).then((res) => res.json()).then((data) => {
-                              if (data?.error) {
-                                        toast.error(data?.error);
-                                        return;
-                              }
-                              return data;
-                    })
-          );
+          const [urlsData, setUrlsData] = useState<any>([]);
+          const [isLoading, setIsLoading] = useState<boolean>(false);
+
+          useEffect(() => {
+                    setIsLoading(true);
+                    const fetchNidInfo = async () => {
+                              const res = await axios.get(`${BASE_API}/user/urls/${uid}`, {
+                                        headers: {
+                                                  authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                                        },
+                              });
+                              setUrlsData(res?.data);
+                              setIsLoading(false);
+                    }
+                    fetchNidInfo()
+          }, [uid])
 
           if (isLoading || !urlsData) return (
                     <Loader />
@@ -67,7 +65,7 @@ export default function UserUrls() {
                                                             <div className='mt-8 md:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                                                                       {urlsData?.urls?.slice(0).reverse()?.map((item: any, index: number) => {
                                                                                 return (
-                                                                                          <UrlsCard item={item} key={index} refetch={refetch} isLoading={isLoading} />
+                                                                                          <UrlsCard item={item} key={index} isLoading={isLoading} />
                                                                                 )
                                                                       })}
                                                             </div>

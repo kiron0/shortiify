@@ -8,11 +8,10 @@ import { FiExternalLink } from 'react-icons/fi'
 
 type Props = {
           item: any,
-          refetch: any,
           isLoading: boolean
 }
 
-export default function UrlsCard({ item, refetch, isLoading }: Props) {
+export default function UrlsCard({ item, isLoading }: Props) {
 
 
           // Add commas or spaces to group every three digits
