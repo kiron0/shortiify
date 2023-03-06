@@ -19,6 +19,8 @@ export default function LocalCard({ item, refetch, isLoading }: Props) {
                               title: "Are you sure?",
                               text: "You won't be able to revert this!",
                               icon: "warning",
+                              background: "#333",
+                              color: "#fff",
                               showCancelButton: true,
                               confirmButtonText: "Yes, delete it!",
                     }).then((willDelete: any) => {

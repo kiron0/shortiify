@@ -7,11 +7,7 @@ export default function useAllUrls() {
           const uid = localStorage.getItem("uid");
 
           useEffect(() => {
-                    fetch(`${BASE_API}/user?uid=${uid}`, {
-                              headers: {
-                                        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                              },
-                    })
+                    fetch(`${BASE_API}/user?uid=${uid}`)
                               .then((res) => res.json())
                               .then((data) => {
                                         setAllURLs(data?.urls);

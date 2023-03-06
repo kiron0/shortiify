@@ -80,6 +80,8 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
           Swal.fire({
             title: "Success!",
             text: `${email} is now an admin.`,
+            background: "#333",
+            color: "#fff",
             icon: "success",
           });
         }
@@ -106,6 +108,8 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
           Swal.fire({
             title: "Success!",
             text: `${email} is user now.`,
+            background: "#333",
+            color: "#fff",
             icon: "success",
           });
         }

@@ -7,7 +7,6 @@ import URL from "../../assets/url.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
-import { AiOutlineLink } from 'react-icons/ai'
 import { RxRocket } from 'react-icons/rx'
 import { InitializeContext } from "../../App";
 
@@ -141,7 +140,7 @@ export default function Navbar() {
                     }
                     to="/dashboard/allUrls"
                   >
-                    <AiOutlineLink className="text-lg" /> Your URLs
+                    <i className='bx bx-link'></i> Your URLs
                   </NavLink>
                 </li>
                 <li className="py-1">

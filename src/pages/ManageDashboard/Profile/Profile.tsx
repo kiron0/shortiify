@@ -34,13 +34,9 @@ const Profile = () => {
     reset,
   } = useForm();
 
-  const [loading, setLoading] = useState(false as boolean);
-  const onSubmit = (data: any) => {
-    setLoading(true);
-    saveProfileDataOnMongodb(data);
-  };
+  const [userInfo, loading] = useUserInfo();
 
-  const saveProfileDataOnMongodb = async (data: any) => {
+  const onSubmit = async (data: any) => {
     const profileData = {
       education: data?.education,
       number: data?.number,
@@ -63,12 +59,9 @@ const Profile = () => {
           toast.success("Profile Updated Successfully");
           reset();
           refetch();
-          setLoading(false);
         }
       });
-  };
-
-  const [userInfo] = useUserInfo();
+  }
 
   if (isLoading || loading || !userInfo)
     return (

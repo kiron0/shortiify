@@ -50,11 +50,13 @@ export default function Home() {
                     };
 
                     if (input === '') {
-                              Swal.fire({
-                                        icon: 'error',
-                                        title: 'Empty URL!',
-                                        text: `Please Enter URL to Shorten.`,
-                                        confirmButtonText: 'Ok, Got it!',
+                              toast.error('Please Enter URL to Shorten..!', {
+                                        duration: 4000,
+                                        style: {
+                                                  padding: '1rem',
+                                                  background: '#333',
+                                                  color: '#fff',
+                                        },
                               });
                               return;
                     } else if (input && !user) {
@@ -67,6 +69,8 @@ export default function Home() {
                                                   icon: 'error',
                                                   title: 'Already Exists!',
                                                   text: `URL: ${input}. Shorten: ${window.location.href}l/${urlExists.slug}. Please try another URL.`,
+                                                  background: "#333",
+                                                  color: "#fff",
                                                   confirmButtonText: 'Ok, Got it!',
                                         });
                                         form.URL.value = '';
@@ -104,16 +108,20 @@ export default function Home() {
                                                   icon: 'error',
                                                   title: 'Already Exists!',
                                                   text: `URL: ${input}. Shorten: ${window.location.href}k/${data?.slug}. Please try another URL.`,
+                                                  background: "#333",
+                                                  color: "#fff",
                                                   confirmButtonText: 'Ok, Got it!',
                                         });
                                         form.URL.value = '';
                                         return;
                               } else if (input === '' && user) {
-                                        Swal.fire({
-                                                  icon: 'error',
-                                                  title: 'Empty URL!',
-                                                  text: `Please Enter URL to Shorten.`,
-                                                  confirmButtonText: 'Ok, Got it!',
+                                        toast.error('Please Enter URL to Shorten..!', {
+                                                  duration: 4000,
+                                                  style: {
+                                                            padding: '1rem',
+                                                            background: '#333',
+                                                            color: '#fff',
+                                                  },
                                         });
                                         return;
                               } else if (!data && input !== '' && !urlError && !user) {
@@ -121,6 +129,8 @@ export default function Home() {
                                                   icon: 'error',
                                                   title: 'Login Required!',
                                                   text: `Please Login to Shorten URL..!`,
+                                                  background: "#333",
+                                                  color: "#fff",
                                                   confirmButtonText: 'Ok, Got it!',
                                         });
                                         return;
@@ -158,14 +168,18 @@ export default function Home() {
                                                             icon: 'error',
                                                             title: 'Login Required!',
                                                             text: `Please Login to Shorten URL.`,
+                                                            background: "#333",
+                                                            color: "#fff",
                                                             confirmButtonText: 'Ok, Got it!',
                                                   });
                                         } else {
-                                                  Swal.fire({
-                                                            icon: 'error',
-                                                            title: 'Empty URL!',
-                                                            text: `Please Enter URL to Shorten.`,
-                                                            confirmButtonText: 'Ok, Got it!',
+                                                  toast.error('Please Enter URL to Shorten..!', {
+                                                            duration: 4000,
+                                                            style: {
+                                                                      padding: '1rem',
+                                                                      background: '#333',
+                                                                      color: '#fff',
+                                                            },
                                                   });
                                         }
                               }

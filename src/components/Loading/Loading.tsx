@@ -3,7 +3,7 @@ import { ScaleLoader } from "react-spinners";
 
 const Loading = () => {
   return (
-    <div className="h-screen flex justify-center items-center backdrop-blur-[9px]">
+    <div className="h-screen flex justify-center items-center">
       <ScaleLoader color={'#19D3AE'} />
     </div>
   );

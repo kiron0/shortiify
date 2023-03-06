@@ -29,6 +29,8 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                               title: "Are you sure?",
                               text: "You won't be able to revert this!",
                               icon: "warning",
+                              background: "#333",
+                              color: "#fff",
                               showCancelButton: true,
                               confirmButtonText: "Yes, delete it!",
                     }).then((willDelete: any) => {
@@ -44,7 +46,14 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                             toast.error(data?.error);
                                                             return;
                                                   }
-                                                  toast.success(data?.message);
+                                                  Swal.fire({
+                                                            title: "Deleted!",
+                                                            text: "Your url has been deleted.",
+                                                            icon: "success",
+                                                            background: "#333",
+                                                            color: "#fff",
+                                                            confirmButtonText: "Ok, Got it!",
+                                                  });
                                                   refetch();
                                         })
                               }
@@ -60,6 +69,8 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                               text: "You won't be able to revert this!",
                               icon: "warning",
                               showCancelButton: true,
+                              background: "#333",
+                              color: "#fff",
                               confirmButtonText: "Yes, update it!",
                     }).then((willDelete: any) => {
                               if (willDelete.isConfirmed) {
@@ -80,6 +91,8 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                                       Swal.fire({
                                                                                 title: "Slug already exists",
                                                                                 icon: "warning",
+                                                                                background: "#333",
+                                                                                color: "#fff",
                                                                                 confirmButtonText: "Ok, Got it!",
                                                                       })
                                                                       return;

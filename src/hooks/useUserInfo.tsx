@@ -5,7 +5,9 @@ import auth from "../auth/Firebase/firebase.init";
 const useUserInfo = () => {
           const [userInfo, setUserInfo] = useState({} as any);
           const [loading, setLoading] = useState(false);
+
           useEffect(() => {
+                    setLoading(true);
                     fetch(`${BASE_API}/users?uid=${auth?.currentUser?.uid}`, {
                               headers: {
                                         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -14,9 +16,9 @@ const useUserInfo = () => {
                               .then((res) => res.json())
                               .then((data) => {
                                         setUserInfo(data[0]);
-                                        setLoading(true);
+                                        setLoading(false);
                               });
-          }, [userInfo]);
+          }, []);
           return [userInfo, loading];
 };
 
