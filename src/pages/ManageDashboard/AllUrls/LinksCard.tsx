@@ -7,7 +7,6 @@ import { FaRegEye } from 'react-icons/fa';
 import { BsClipboard } from 'react-icons/bs';
 import Loading from '../../../components/Loading/Loading';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 
 type Props = {
           item: any,
@@ -81,38 +80,32 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                   toast.error("Slug must be 6 characters long");
                                                   return;
                                         } else {
-                                                  fetch(`${BASE_API}/user/getSlug?slug=${input}`, {
-                                                            method: "GET",
+                                                  fetch(`${BASE_API}/user/getSlug?slug=${input}&&id=${item?._id}`, {
+                                                            method: "PATCH",
                                                             headers: {
+                                                                      "Content-Type": "application/json",
                                                                       authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                                                             },
-                                                  }).then((res) => res.json()).then((data) => {
-                                                            if (data?.message === "Slug already exists") {
-                                                                      Swal.fire({
-                                                                                title: "Slug already exists",
-                                                                                icon: "warning",
-                                                                                background: "#333",
-                                                                                color: "#fff",
-                                                                                confirmButtonText: "Ok, Got it!",
-                                                                      })
-                                                                      return;
-                                                            } else if (data?.message === "Slug is available") {
-                                                                      axios.patch(`${BASE_API}/user/updateSlug?id=${item?._id}`, {
-                                                                                slug: input,
-                                                                      }, {
-                                                                                headers: {
-                                                                                          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                                                                                },
-                                                                      })
-                                                                                .then((data) => {
-                                                                                          toast.success(data.data.message);
-                                                                                          refetch();
-                                                                                          setIsEdit(false);
+                                                            body: JSON.stringify({
+                                                                      slug: input,
+                                                            }),
+                                                  }).then((res) => res.json())
+                                                            .then((data) => {
+                                                                      if (data?.message === "Slug already exists") {
+                                                                                Swal.fire({
+                                                                                          title: "Slug already exists",
+                                                                                          icon: "warning",
+                                                                                          background: "#333",
+                                                                                          color: "#fff",
+                                                                                          confirmButtonText: "Ok, Got it!",
                                                                                 })
-                                                            } else {
-                                                                      toast.error("Something went wrong");
-                                                            }
-                                                  })
+                                                                                return;
+                                                                      } else {
+                                                                                toast.success(data.message);
+                                                                                refetch();
+                                                                                setIsEdit(false);
+                                                                      }
+                                                            })
                                         }
                               }
                     })
