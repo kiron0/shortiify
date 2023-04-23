@@ -9,6 +9,7 @@ import useTitle from "../../../hooks/useTitle";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
+import Swal from "sweetalert2";
 
 export default function Setting() {
   useTitle("Setting");
@@ -20,32 +21,76 @@ export default function Setting() {
   const { setValue } = useForm();
   const [input, setInput] = useState(appName);
 
-  /* Handle Change App Name */
+
   const handleChangeAppName = async (e: any) => {
     e.preventDefault();
-    try {
-      await fetch(`${BASE_API}/app/changeAppName`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify({ appName: input }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            toast.success("App Name Changed Successfully");
-            refetch();
-            setIsEdit(false);
-          } else {
-            toast.error(data.message);
-          }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      background: "#333",
+      color: "#fff",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, proceed!",
+    }).then((willDelete: any) => {
+      if (willDelete.isConfirmed) {
+        Swal.fire({
+          title: `Are you sure you want to change the app name?`,
+          input: "text",
+          inputPlaceholder: "Type 'changeName' to confirm",
+          background: "#333",
+          color: "#fff",
+          inputAttributes: {
+            autocapitalize: "off",
+            autocorrect: "off",
+            maxlength: 10,
+          },
+          showCancelButton: true,
+          confirmButtonText: "Confirm",
+          showLoaderOnConfirm: true,
+          preConfirm: (confirm: any) => {
+            if (confirm !== "changeName") {
+              Swal.showValidationMessage(`You must type 'changeName' to confirm`);
+            } else {
+              try {
+                fetch(`${BASE_API}/app/changeAppName`, {
+                  method: "PATCH",
+                  headers: {
+                    "content-type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                  },
+                  body: JSON.stringify({ appName: input }),
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    if (data.success) {
+                      Swal.fire({
+                        title: "Success!",
+                        icon: "success",
+                        text: "App name has been changed.",
+                        background: "#333",
+                        color: "#fff",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Ok, cool!",
+                      });
+                      refetch();
+                      setIsEdit(false);
+                    } else {
+                      toast.error(data.message);
+                    }
+                  });
+              } catch (error: string | any) {
+                toast.error(error.response.data.message);
+              }
+            }
+          },
         });
-    } catch (error: string | any) {
-      toast.error(error.response.data.message);
-    }
-  };
+      }
+    });
+  }
+
 
   useEffect(() => {
     setValue("appName", appName);

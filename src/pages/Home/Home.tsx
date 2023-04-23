@@ -8,9 +8,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { InitializeContext } from '../../App';
 import Swal from 'sweetalert2';
 import { ClipLoader, ScaleLoader } from 'react-spinners';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
-          const { refetch } = useContext(InitializeContext);
+          const { refetch, appName } = useContext(InitializeContext);
           const [user] = useAuthState(auth);
           const [urlError, setUrlError] = useState<string>("");
           const [loading, setLoading] = useState<boolean>(false);
@@ -103,7 +104,7 @@ export default function Home() {
                                         body: JSON.stringify({ url: input }),
                               });
                               const data = await res.json();
-                              if (data?.url || data.length > 0) {
+                              if (data?.url || data?.length > 0) {
                                         Swal.fire({
                                                   icon: 'error',
                                                   title: 'Already Exists!',
@@ -205,7 +206,7 @@ export default function Home() {
                                                                       <span className="label-text text-white">Your Long URL</span>
                                                             </label>
                                                             <div className='flex flex-col md:flex-row justify-center items-center gap-3'>
-                                                                      <input type="text" name='URL' placeholder="Type/Paste your URL" onChange={handleURLError} className={`input w-full max-w-xs bg-transparent border-1 border-white text-white lowercase ${urlError && "border-error shadow-error outline-error"}`} autoComplete='off' />
+                                                                      <input type="text" name='URL' placeholder="Type/Paste your URL" onChange={handleURLError} className={`input w-full max-w-xs bg-transparent border-1 border-white text-white lowercase placeholder:text-gray-300 ${urlError && "border-error shadow-error outline-error"}`} autoComplete='off' />
                                                                       <button className={`btn btn-primary text-white ${urlError ? 'btn-disabled cursor-not-allowed' : ''}`}>{loading ? <ClipLoader loading={loading}
                                                                                 color="#fff"
                                                                                 size={20}
@@ -216,7 +217,8 @@ export default function Home() {
                                                                                 {urlError}
                                                                       </small>
                                                             )}
-                                                            <p className='text-white text-center mt-3 text-xs'>React, Redux & Typescript powered URL Shortener 🔥</p>
+                                                            {/* <p className='text-white text-center mt-3 text-xs'>React, Redux & Typescript powered URL Shortener 🔥</p> */}
+                                                            <small className='text-white text-center mt-3'>By clicking Shorten URL, you agree to {appName}'s <Link to="/pages/termsOfService" className='underline'>Terms of Use</Link>, <Link to="/pages/privacyPolicy" className='underline'>Privacy Policy</Link> and <Link to="/pages/acceptableUse" className='underline'>Use Policy</Link>.</small>
                                                   </div>
                                         </form>
                               </div>

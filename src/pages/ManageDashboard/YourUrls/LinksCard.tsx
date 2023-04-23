@@ -123,7 +123,7 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
           return (
                     <div className="card w-full bg-[url('./assets/bg.jpg')]">
                               <div className="card-body">
-                                        <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
+                                        <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url?.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                         {isEdit ? (
                                                   <div className='flex justify-center items-center'>
                                                             <p className='text-gray-400'>{window.location.origin}/k/</p>

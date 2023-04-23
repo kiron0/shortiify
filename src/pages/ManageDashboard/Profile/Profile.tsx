@@ -101,9 +101,26 @@ const Profile = () => {
 
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mb-4 text-white">
               <span>Role</span>
-              <span className="badge bg-primary border-primary text-white">
-                {userInfo?.role === "admin" ? "Admin" : "User"}
-              </span>
+              {
+                userInfo?.email === "toufiqhasankiron2@gmail.com" ? (
+                  <span className="badge badge-outline text-white">
+                    🔥Developer🔥
+                  </span>
+                ) : (
+                  <>
+                    {
+                      userInfo?.role === "admin" ? (
+                        <span className="badge badge-primary badge-xs p-3 select-none text-white">
+                          Admin
+                        </span>
+                      ) : (
+                        <span className="badge badge-neutral badge-xs p-3 select-none text-white">
+                          User
+                        </span>
+                      )
+                    }
+                  </>
+                )}
             </div>
             <hr className="border-dashed" />
             <div className="flex flex-col md:flex-row justify-between items-center px-4 mb-4 text-white">

@@ -7,18 +7,18 @@ import { BASE_API } from './config';
 import Root from './Layouts/Root';
 import NotFound from './shared/NotFound/NotFound';
 import Redirect from './pages/Redirect/Redirect';
-import Dashboard from './pages/ManageDashboard/Dashobard/Dashboard';
+import Dashboard from './pages/ManageDashboard/Dashboard/Dashboard';
 import Index from './pages/ManageDashboard/Index/Index';
 import Profile from './pages/ManageDashboard/Profile/Profile';
 import Login from './pages/Authentication/Login/Login';
 import RequireAuth from './auth/RequireAuth/RequireAuth';
 import RequireAdmin from './auth/RequireAdmin/RequireAdmin';
 import Setting from './pages/ManageDashboard/Setting/Setting';
-import AllUrls from './pages/ManageDashboard/AllUrls/AllUrls';
+import YourUrls from './pages/ManageDashboard/YourUrls/YourUrls';
 import ManageUsers from './pages/ManageDashboard/ManageUsers/ManageUsers';
-import UserUrls from './pages/ManageDashboard/UserUrls/UserUrls';
 import LocalURLs from './pages/LocalURLs/LocalURLs';
 import LocalRedirect from './pages/LocalRedirect/LocalRedirect';
+import AllUrls from './pages/ManageDashboard/AllUrls/AllUrls';
 
 const router = createBrowserRouter(
   [
@@ -43,6 +43,26 @@ const router = createBrowserRouter(
       element: <LocalURLs />
     },
     {
+      path: "/pages/about",
+      element: <NotFound />
+    },
+    {
+      path: "/pages/contact",
+      element: <NotFound />
+    },
+    {
+      path: "/pages/termsOfService",
+      element: <NotFound />
+    },
+    {
+      path: "/pages/acceptableUse",
+      element: <NotFound />
+    },
+    {
+      path: "/pages/privacyPolicy",
+      element: <NotFound />
+    },
+    {
       path: "/dashboard",
       element: <RequireAuth>
         <Dashboard />
@@ -57,6 +77,10 @@ const router = createBrowserRouter(
           element: <Profile />
         },
         {
+          path: "/dashboard/yourUrls",
+          element: <YourUrls />
+        },
+        {
           path: "/dashboard/allUrls",
           element: <AllUrls />
         },
@@ -64,12 +88,6 @@ const router = createBrowserRouter(
           path: "/dashboard/allUsers",
           element: <RequireAdmin>
             <ManageUsers />
-          </RequireAdmin>
-        },
-        {
-          path: "/dashboard/user/urls/:uid",
-          element: <RequireAdmin>
-            <UserUrls />
           </RequireAdmin>
         },
         {

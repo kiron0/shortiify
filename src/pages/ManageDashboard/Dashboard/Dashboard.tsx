@@ -84,9 +84,9 @@ const Dashboard: any = () => {
               <span className="absolute top-2 right-2 cursor-pointer" onClick={handleThemeChange}>
                 {
                   theme ? (
-                    <input type="checkbox" className="toggle toggle-xs" checked />
+                    <input type="checkbox" className="toggle toggle-xs bg-primary" checked />
                   ) : (
-                    <input type="checkbox" className="toggle toggle-xs" />
+                    <input type="checkbox" className="toggle toggle-xs bg-primary" />
                   )
                 }
               </span>
@@ -183,13 +183,24 @@ const Dashboard: any = () => {
               className={({ isActive }) =>
                 isActive ? "text-white bg-primary" : "text-white"
               }
-              to="/dashboard/allUrls"
+              to="/dashboard/yourUrls"
             >
-              <AiOutlineLink className="text-lg" /> Manage All URLs
+              <AiOutlineLink className="text-lg" /> Manage Your URLs
             </NavLink>
           </li>
           {admin && (
             <>
+              <li className="py-2">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-white bg-primary" : "text-white"
+                  }
+                  to="/dashboard/allUrls"
+                >
+                  <AiOutlineLink className="text-lg" /> Manage All The
+                  URLs
+                </NavLink>
+              </li>
               <li className="py-2">
                 <NavLink
                   className={({ isActive }) =>

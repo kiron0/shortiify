@@ -12,7 +12,6 @@ export default function ManageUsers() {
   useScrollToTop();
   useTitle("Manage All Users");
 
-
   const {
     data: users,
     isLoading,
@@ -27,7 +26,7 @@ export default function ManageUsers() {
   );
 
 
-  if (isLoading || !users || !users.length) {
+  if (isLoading || !users || !users?.length) {
     return <Loading />;
   }
 

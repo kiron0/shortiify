@@ -10,7 +10,7 @@ export default function LocalRedirect() {
           useEffect(() => {
                     const fetchLocalURLs = () => {
                               const localUrls = JSON.parse(localStorage.getItem("localURLs") || "[]");
-                              if (localUrls.length === 0) return setLoading(false);
+                              if (localUrls?.length === 0) return setLoading(false);
                               const urlObj = localUrls.find((url: any) => url.slug === slug);
                               if (!urlObj) return setLoading(false);
                               if (urlObj) {

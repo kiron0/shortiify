@@ -122,7 +122,7 @@ export default function URLBox({ localURLs }: { localURLs: [] }) {
                                                                                                                         return (
                                                                                                                                   <div className="card w-[355px] md:w-[370px] bg-[url('./assets/bg.jpg')] text-white" key={index}>
                                                                                                                                             <div className="card-body">
-                                                                                                                                                      <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
+                                                                                                                                                      <p><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url?.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                                                                                                                                       <a className='text-primary flex items-center gap-2' href={`${window.location.href}l/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.href}l/{item?.slug} <FiExternalLink /></a>
                                                                                                                                                       <div className='flex justify-center items-center'>
                                                                                                                                                                 <p className='flex items-center gap-2'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>
@@ -155,9 +155,9 @@ export default function URLBox({ localURLs }: { localURLs: [] }) {
                                                                                 </>
                                                                       ) : (
                                                                                 <div className='flex justify-center items-center mt-10 px-3 md:px-0'>
-                                                                                          <div className="card w-full md:w-[370px] bg-[url('./assets/bg2.jpg')] border-2 shadow-xl text-white">
+                                                                                          <div className="card w-full md:w-[370px] border text-white">
                                                                                                     <div className="card-body">
-                                                                                                              <p className='text-center'>No URLs found!</p>
+                                                                                                              <p className='text-center'>No URLs have been shortened!</p>
                                                                                                     </div>
                                                                                           </div>
                                                                                 </div>

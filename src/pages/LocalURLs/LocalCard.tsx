@@ -51,7 +51,7 @@ export default function LocalCard({ item, refetch, isLoading }: Props) {
           return (
                     <div className="card w-full bg-[url('./assets/bg.jpg')]">
                               <div className="card-body">
-                                        <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
+                                        <p className='text-white'><a href={item?.url} target="_blank" rel="noopener noreferrer">{item?.url?.length > 35 ? item?.url?.slice(0, 35) + "..." : item?.url}</a></p>
                                         <p><a className='text-primary flex items-center gap-2 w-48' href={`${window.location.origin}/l/${item?.slug}`} target="_blank" rel="noopener noreferrer">{window.location.origin}/l/{item?.slug}</a></p>
                                         <div className='flex justify-center items-center'>
                                                   <p className='flex items-center gap-2 text-white'><FaRegEye className='text-lg' />{numberWithCommas(item?.views)} Views</p>

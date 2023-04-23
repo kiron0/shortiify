@@ -42,7 +42,7 @@ export default function Navbar() {
     <div className={`sticky top-0 z-50 duration-300 ${scrollY > 30 ? "bg-[url('./assets/bg.jpg')] shadow-md" : "bg-transparent"}`}>
       <div className="navbar w-full container mx-auto">
         <div className="flex-1 items-center -ml-4 md:ml-0">
-          <a className="btn btn-ghost normal-case text-xl md:text-2xl text-white" href='/'><img src={URL} alt="" className="w-11 md:w-12 md:mr-2" />{appName}</a>
+          <Link className="btn btn-ghost normal-case text-xl md:text-2xl text-white" to='/'><img src={URL} alt="" className="w-11 md:w-12 md:mr-2" />{appName}</Link>
         </div>
         <div>
           {!user && (
@@ -86,9 +86,9 @@ export default function Navbar() {
                 <span className="absolute top-2 right-2 cursor-pointer" onClick={handleThemeChange}>
                   {
                     theme ? (
-                      <input type="checkbox" className="toggle toggle-xs" checked />
+                      <input type="checkbox" className="toggle toggle-xs bg-primary" checked />
                     ) : (
-                      <input type="checkbox" className="toggle toggle-xs" />
+                      <input type="checkbox" className="toggle toggle-xs bg-primary" />
                     )
                   }
                 </span>
@@ -138,7 +138,7 @@ export default function Navbar() {
                     className={({ isActive }) =>
                       isActive ? "text-white bg-primary" : ""
                     }
-                    to="/dashboard/allUrls"
+                    to="/dashboard/yourUrls"
                   >
                     <i className='bx bx-link'></i> Your URLs
                   </NavLink>

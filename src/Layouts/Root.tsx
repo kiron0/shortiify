@@ -10,7 +10,7 @@ export default function Root() {
   useTitle("Home");
   return (
     <>
-      <div className={`bg-[url('./assets/bg2.jpg')] h-screen`}>
+      <div className={`bg-[url('./assets/bg2.jpg')]`}>
         <Navbar />
         <Home />
         <Footer />

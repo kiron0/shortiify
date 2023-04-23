@@ -6,7 +6,6 @@ import { InitializeContext } from "../../../App";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 import useScrollToTop from "../../../hooks/useScrollToTop";
-import { useNavigate } from "react-router-dom";
 
 type UserRowProps = {
   user: {
@@ -25,7 +24,6 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
   useScrollToTop();
   const { theme } = useContext(InitializeContext);
   const { _id, email, role, uid, image, displayName } = user;
-  const navigate = useNavigate();
 
   /* Handle Delete User */
   const handleUserDelete = (id: any) => {
@@ -121,21 +119,19 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
       <th>{index + 1}</th>
       <td>
         {auth?.currentUser?.uid === uid ? (
-          <span className="tooltip tooltip-right tooltip-secondary cursor-pointer" data-tip="See your URLs!">
+          <span>
             <img
               src={image}
               alt=""
               className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm border-2 border-error p-1"
-              onClick={() => navigate(`/dashboard/allUrls`)}
             />
           </span>
         ) : (
-          <span className="tooltip tooltip-right tooltip-secondary cursor-pointer" data-tip="See their URLs!">
+          <span>
             <img
               src={image}
               alt=""
               className="rounded-full w-[2.5rem] h-[2.5rem] shadow-sm border p-1"
-              onClick={() => navigate(`/dashboard/user/urls/${uid}`)}
             />
           </span>
         )}
@@ -153,7 +149,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
         ) : (
           <span className="tooltip" data-tip="Change user role">
             <select
-              className={`select select-bordered w-full max-w-xs ${role === "admin" ? "select-secondary" : ""
+              className={`select select-bordered select-xs w-full max-w-xs ${role === "admin" ? "select-secondary" : ""
                 }`}
               defaultValue={
                 role === "admin"
@@ -181,18 +177,18 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
       </td>
       {email === "toufiqhasankiron2@gmail.com" ? (
         <td>
-          <span className="badge badge-outline p-3 select-none">
+          <span className="badge badge-outline badge-xs p-3 select-none">
             🔥Developer🔥
           </span>
         </td>
       ) : (
         <td>
           {role === "admin" ? (
-            <span className="badge badge-primary select-none text-white">
+            <span className="badge badge-primary badge-xs p-3 select-none text-white">
               Admin
             </span>
           ) : (
-            <span className="badge badge-neutral select-none text-white">
+            <span className="badge badge-neutral badge-xs p-3 select-none text-white">
               User
             </span>
           )}
@@ -200,7 +196,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
       )}
       <td className="select-none">
         {auth?.currentUser?.uid === uid ? (
-          <span className="badge badge-error text-white">Active </span>
+          <span className="badge badge-error badge-xs p-3 text-white">Active </span>
         ) : (
           ""
         )}
@@ -213,7 +209,7 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
           <span className="tooltip tooltip-error" data-tip="Delete user data!">
             <button
               onClick={() => handleUserDelete(_id)}
-              className="btn btn-sm btn-accent text-white"
+              className="btn btn-xs btn-accent text-white"
             >
               <i className="bx bxs-trash"></i>
             </button>

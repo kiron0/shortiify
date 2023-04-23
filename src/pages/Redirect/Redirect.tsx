@@ -12,7 +12,7 @@ export default function Redirect() {
           useEffect(() => {
                     const fetchLinkDoc = () => {
                               const uid = localStorage.getItem("uid");
-                              if (!slug || slug.length !== 6 || uid === undefined) return setLoading(false);
+                              if (!slug || slug?.length !== 6 || uid === undefined) return setLoading(false);
                               axios.get(`${BASE_API}/users/urls?slug=${slug}`, {
                                         headers: {
                                                   authorization: `Bearer ${localStorage.getItem("accessToken")}`,
