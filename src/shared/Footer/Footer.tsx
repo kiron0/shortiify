@@ -28,10 +28,10 @@ export default function Footer() {
                                         </div>
                                         <div className="mt-12 flex flex-col md:flex-row justify-center items-center text-sm text-white">
                                                   <Link to='/pages/termsOfService' className='px-2'>Terms & Conditions</Link>
-                                                  <Link to='/pages/acceptableUse' className='px-2 border-l'>User Policy</Link>
-                                                  <Link to='/pages/privacyPolicy' className='px-2 border-l'>Privacy Policy</Link>
-                                                  <Link to='/pages/about' className='px-2 border-l'>About</Link>
-                                                  <Link to='/pages/contact' className='px-2 border-l'>Contact</Link>
+                                                  <Link to='/pages/acceptableUse' className='px-2 lg:border-l'>User Policy</Link>
+                                                  <Link to='/pages/privacyPolicy' className='px-2 lg:border-l'>Privacy Policy</Link>
+                                                  <Link to='/pages/about' className='px-2 lg:border-l'>About</Link>
+                                                  <Link to='/pages/contact' className='px-2 lg:border-l'>Contact</Link>
                                         </div>
 
                                         <div className='flex flex-col justify-center items-center pt-6'>
