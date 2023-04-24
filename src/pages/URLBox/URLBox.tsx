@@ -90,7 +90,7 @@ export default function URLBox({ localURLs }: { localURLs: [] }) {
                                                                                                     {
                                                                                                               urlsData?.urls?.length > 3 && (
                                                                                                                         <div className='mt-6 md:mt-10'>
-                                                                                                                                  <Link to="/dashboard/allUrls"><button className="btn bg-[url('./assets/bg.jpg')] text-white">See All URL's</button></Link>
+                                                                                                                                  <Link to="/dashboard/yourUrls"><button className="btn bg-[url('./assets/bg.jpg')] text-white">See All URL's</button></Link>
                                                                                                                         </div>
                                                                                                               )
                                                                                                     }
@@ -98,9 +98,9 @@ export default function URLBox({ localURLs }: { localURLs: [] }) {
                                                                                 </>
                                                                       ) : (
                                                                                 <div className='flex justify-center items-center mt-10 px-3 md:px-0'>
-                                                                                          <div className="card w-full md:w-[370px] bg-[url('./assets/bg2.jpg')] border-2 shadow-xl text-white">
+                                                                                          <div className="card w-full md:w-[370px] border text-white">
                                                                                                     <div className="card-body">
-                                                                                                              <p className='text-center'>No URLs found!</p>
+                                                                                                              <p className='text-center'>No URLs have been shortened!</p>
                                                                                                     </div>
                                                                                           </div>
                                                                                 </div>

@@ -217,7 +217,6 @@ export default function Home() {
                                                                                 {urlError}
                                                                       </small>
                                                             )}
-                                                            {/* <p className='text-white text-center mt-3 text-xs'>React, Redux & Typescript powered URL Shortener 🔥</p> */}
                                                             <small className='text-white text-center mt-3'>By clicking Shorten URL, you agree to {appName}'s <Link to="/pages/termsOfService" className='underline'>Terms of Use</Link>, <Link to="/pages/privacyPolicy" className='underline'>Privacy Policy</Link> and <Link to="/pages/acceptableUse" className='underline'>Use Policy</Link>.</small>
                                                   </div>
                                         </form>

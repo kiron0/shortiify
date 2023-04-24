@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import useAdmin from "../../../hooks/useAdmin";
 import Loading from "../../../components/Loading/Loading";
 import { InitializeContext } from "../../../App";
 import useTitle from "../../../hooks/useTitle";
@@ -10,13 +9,14 @@ import useScrollToTop from "../../../hooks/useScrollToTop";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 import Swal from "sweetalert2";
+import useUserRole from "../../../hooks/useUserRole";
 
 export default function Setting() {
   useTitle("Setting");
   useScrollToTop();
   const { appName, refetch } = useContext(InitializeContext);
   const [user, isLoading] = useAuthState(auth);
-  const [admin, adminLoading] = useAdmin(user);
+  const [userRole, userRoleLoading] = useUserRole(user);
   const [isEdit, setIsEdit] = useState(false);
   const { setValue } = useForm();
   const [input, setInput] = useState(appName);
@@ -96,7 +96,7 @@ export default function Setting() {
     setValue("appName", appName);
   }, [setValue, appName]);
 
-  if (isLoading || adminLoading) {
+  if (isLoading || userRoleLoading) {
     return <Loading />;
   }
 
@@ -107,7 +107,7 @@ export default function Setting() {
           <h3 className="text-2xl font-bold mb-3 text-white">Settings</h3>
 
           <div className="settings-content">
-            {admin && (
+            {userRole === "developer" && (
               <div className="flex flex-col sm:flex-row items-center justify-between py-6 rounded my-4 text-white px-5">
                 <h2 className="text-xl font-bold pb-3 md:pb-0">
                   Change App Name

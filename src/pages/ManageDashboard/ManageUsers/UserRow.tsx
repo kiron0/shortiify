@@ -1,45 +1,79 @@
 import React from "react";
-import { useContext } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
-import { InitializeContext } from "../../../App";
 import { BASE_API } from "../../../config";
 import auth from "../../../auth/Firebase/firebase.init";
 import useScrollToTop from "../../../hooks/useScrollToTop";
+import { useAuthState } from "react-firebase-hooks/auth";
+import useUserRole from "../../../hooks/useUserRole";
+import moment from 'moment';
 
 type UserRowProps = {
-  user: {
-    _id: string;
+  userObj: {
     email: string;
     role: string;
     uid: string;
     image: string;
     displayName: string;
+    lastLogin: string;
   };
   index: number;
   refetch: () => void;
 };
 
-const UserRow = ({ user, index, refetch }: UserRowProps) => {
+const UserRow = ({ userObj, index, refetch }: UserRowProps) => {
   useScrollToTop();
-  const { theme } = useContext(InitializeContext);
-  const { _id, email, role, uid, image, displayName } = user;
+  const { email, role, uid, image, displayName, lastLogin } = userObj;
+  const [user] = useAuthState(auth);
+  const [userRole] = useUserRole(user);
+
+  const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const userRole = e.target.value.toLowerCase() as string;
+
+    fetch(`${BASE_API}/user/roleChange`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({
+        userRole,
+        email,
+      }),
+    })
+      .then((res) => {
+        if (res.status === 403) {
+          toast.error("Failed to Make an admin");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.success) {
+          refetch();
+          Swal.fire({
+            title: "Success!",
+            text: `${email} is now ${e.target.value}`,
+            icon: "success",
+          });
+        }
+      });
+  };
 
   /* Handle Delete User */
-  const handleUserDelete = (id: any) => {
+  const handleUserDelete = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      background: theme === "night" ? "#333" : "#fff",
-      color: theme === "night" ? "#fff" : "#333",
+      background: "#333",
+      color: "#fff",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((willDelete: any) => {
       if (willDelete.isConfirmed) {
-        fetch(`${BASE_API}/user/${email}`, {
+        fetch(`${BASE_API}/user/deleteUser?email=${email}`, {
           method: "DELETE",
           headers: {
             "content-type": "application/json",
@@ -49,69 +83,16 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
           .then((res) => res.json())
           .then((result) => {
             if (result.deletedCount) {
-              toast.success(`${email} is deleted.`);
+              Swal.fire({
+                title: "Deleted!",
+                text: `${email} has been deleted.`,
+                icon: "success",
+              });
               refetch();
             }
           });
       }
     });
-  };
-
-  const makeAdmin = () => {
-    fetch(`${BASE_API}/user/admin`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => {
-        if (res.status === 403) {
-          toast.error("Failed to Make an admin");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          refetch();
-          Swal.fire({
-            title: "Success!",
-            text: `${email} is now an admin.`,
-            background: "#333",
-            color: "#fff",
-            icon: "success",
-          });
-        }
-      });
-  };
-  const removeAdmin = () => {
-    fetch(`${BASE_API}/user/removeAdmin`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(user),
-    })
-      .then((res) => {
-        if (res.status === 403) {
-          toast.error("Failed to Remove an admin");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.modifiedCount > 0) {
-          refetch();
-          Swal.fire({
-            title: "Success!",
-            text: `${email} is user now.`,
-            background: "#333",
-            color: "#fff",
-            icon: "success",
-          });
-        }
-      });
   };
 
   return (
@@ -149,57 +130,65 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
         ) : (
           <span className="tooltip" data-tip="Change user role">
             <select
-              className={`select select-bordered select-xs w-full max-w-xs ${role === "admin" ? "select-secondary" : ""
+              className={`select select-bordered w-full max-w-xs ${userRole === "developer" ? "" : "btn-disabled"} ${role === "developer" ? "select-primary" : role === "admin" ? "select-secondary" : "select-neutral"} select-sm
                 }`}
               defaultValue={
                 role === "admin"
                   ? "Admin"
-                  : role === "superAdmin"
-                    ? "Super Admin"
-                    : "User"
+                  : role === "premium user"
+                    ? "Premium User"
+                    : role === "developer"
+                      ? "Developer"
+                      : "User"
               }
-              onChange={(e) => {
-                if (e.target.value === "Admin") {
-                  makeAdmin();
-                } else {
-                  removeAdmin();
-                }
-              }}
+              onChange={handleRoleChange}
             >
               <option disabled selected>
                 Select Role
               </option>
               <option>User</option>
               <option>Admin</option>
+              <option>Developer</option>
             </select>
           </span>
         )}
       </td>
-      {email === "toufiqhasankiron2@gmail.com" ? (
-        <td>
-          <span className="badge badge-outline badge-xs p-3 select-none">
-            🔥Developer🔥
+      <td>
+        {role === "admin" ? (
+          <span className="badge badge-secondary badge-outline p-3 select-none">
+            Admin
           </span>
-        </td>
-      ) : (
-        <td>
-          {role === "admin" ? (
-            <span className="badge badge-primary badge-xs p-3 select-none text-white">
-              Admin
+        )
+          : role === "developer" ? (
+            <span className="badge badge-primary badge-outline p-3 select-none">
+              🔥Developer🔥
             </span>
-          ) : (
-            <span className="badge badge-neutral badge-xs p-3 select-none text-white">
-              User
-            </span>
-          )}
-        </td>
-      )}
+          )
+            : (
+              <span className="badge badge-outline p-3 select-none">
+                User
+              </span>
+            )}
+      </td>
       <td className="select-none">
         {auth?.currentUser?.uid === uid ? (
-          <span className="badge badge-error badge-xs p-3 text-white">Active </span>
+          <span className="badge badge-error text-white">Active </span>
         ) : (
           ""
         )}
+      </td>
+      <td>
+        <span className="tooltip" data-tip="Last login">
+          {
+            lastLogin ? (
+              <>
+                {moment(lastLogin).fromNow()}
+              </>
+            ) : (
+              <span className="badge badge-neutral text-white">Not available</span>
+            )
+          }
+        </span>
       </td>
       <td>
         {email === "toufiqhasankiron2@gmail.com" ||
@@ -208,8 +197,8 @@ const UserRow = ({ user, index, refetch }: UserRowProps) => {
         ) : (
           <span className="tooltip tooltip-error" data-tip="Delete user data!">
             <button
-              onClick={() => handleUserDelete(_id)}
-              className="btn btn-xs btn-accent text-white"
+              onClick={handleUserDelete}
+              className={`btn btn-xs btn-accent text-white ${userRole === "developer" ? "" : "btn-disabled"}`}
             >
               <i className="bx bxs-trash"></i>
             </button>

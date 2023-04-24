@@ -9,11 +9,14 @@ import { signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { RxRocket } from 'react-icons/rx'
 import { InitializeContext } from "../../App";
+import Swal from "sweetalert2";
+import useUserRole from "../../hooks/useUserRole";
 
 export default function Navbar() {
   useScrollToTop();
   const { appName, theme, handleThemeChange } = useContext(InitializeContext);
   const [user] = useAuthState(auth);
+  const [userRole] = useUserRole(user);
   const [image] = useProfileImage(user);
   const [scrollY, setScrollY] = useState() as any;
 
@@ -31,11 +34,33 @@ export default function Navbar() {
   }, [scrollY]);
 
   const handleLogOut = () => {
-    signOut(auth);
-    localStorage.removeItem("accessToken");
-    toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
-      position: "top-center",
-    });
+    // swal for confirmation
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be signed out from this account.",
+      icon: "warning",
+      showCancelButton: true,
+      background: theme === "night" ? "#333" : "#fff",
+      color: theme === "night" ? "#fff" : "#333",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, sign out!",
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        // sign out from firebase
+        signOut(auth).then(() => {
+          localStorage.removeItem("accessToken");
+          toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
+            position: "top-center",
+          });
+        }).catch((err) => {
+          // toast for error
+          toast(err.message, {
+            icon: '👎',
+          })
+        })
+      }
+    })
   };
 
   return (
@@ -143,6 +168,34 @@ export default function Navbar() {
                     <i className='bx bx-link'></i> Your URLs
                   </NavLink>
                 </li>
+                {
+                  userRole === 'developer' && (
+                    <li className="py-1 font-semibold">
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? "text-white bg-primary" : ""
+                        }
+                        to="/dashboard/allUrls"
+                      >
+                        <i className='bx bx-link'></i> All The URLs
+                      </NavLink>
+                    </li>
+                  )
+                }
+                {
+                  userRole === 'admin' || userRole === 'developer' ? (
+                    <li className="py-1 font-semibold">
+                      <NavLink
+                        className={({ isActive }) =>
+                          isActive ? "text-white bg-primary" : ""
+                        }
+                        to="/dashboard/allUsers"
+                      >
+                        <i className='bx bxs-user'></i> All The Users
+                      </NavLink>
+                    </li>
+                  ) : null
+                }
                 <li className="py-1">
                   <button
                     onClick={handleLogOut}

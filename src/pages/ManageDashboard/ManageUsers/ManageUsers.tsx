@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BASE_API } from "../../../config";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import useTitle from "../../../hooks/useTitle";
 import UserRow from "./UserRow";
 import Loading from "../../../components/Loading/Loading";
+import Pagination from "./Pagination";
 
 const Fade = require("react-reveal/Fade");
 
 export default function ManageUsers() {
   useScrollToTop();
   useTitle("Manage All Users");
+  const [pageLoading, setPageLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [size] = useState(10);
 
   const {
-    data: users,
+    data,
     isLoading,
     refetch,
   } = useQuery(["users"], () =>
-    fetch(`${BASE_API}/users/all`, {
+    fetch(`${BASE_API}/users/all?page=${page}&limit=${size}`, {
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -25,8 +29,17 @@ export default function ManageUsers() {
     }).then((res) => res.json())
   );
 
+  useEffect(() => {
+    setPageLoading(true);
+    refetch();
+    setPageLoading(false);
+  }, [page, refetch]);
 
-  if (isLoading || !users || !users?.length) {
+  const usersArray = data?.users;
+  const pageNumber = data?.totalPages;
+
+
+  if (isLoading || !usersArray || !usersArray?.length || pageLoading) {
     return <Loading />;
   }
 
@@ -49,15 +62,16 @@ export default function ManageUsers() {
                 <th>Change User Role</th>
                 <th>Role</th>
                 <th>isLogin</th>
+                <th>Last Login</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {users?.map((user: any, index: number) => (
+              {usersArray?.map((user: any, index: number) => (
                 <UserRow
                   index={index}
                   key={user._id}
-                  user={user}
+                  userObj={user}
                   refetch={refetch}
                 ></UserRow>
               ))}
@@ -65,6 +79,8 @@ export default function ManageUsers() {
           </table>
         </div>
       </Fade>
+
+      <Pagination page={page} setPage={setPage} totalPages={pageNumber} />
     </div>
   );
 };

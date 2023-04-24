@@ -5,31 +5,53 @@ import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MdSpaceDashboard } from "react-icons/md";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import useAdmin from "../../../hooks/useAdmin";
+import useUserRole from "../../../hooks/useUserRole";
 import useProfileImage from "../../../hooks/useProfileImage";
 import auth from "../../../auth/Firebase/firebase.init";
 import { InitializeContext } from "../../../App";
 import { AiOutlineLink } from "react-icons/ai";
 import Loading from "../../../components/Loading/Loading";
+import Swal from "sweetalert2";
 
 const Dashboard: any = () => {
   const { appName, theme, handleThemeChange } = useContext(InitializeContext);
   const [user, isLoading] = useAuthState(auth);
-  const [admin, adminLoading] = useAdmin(user);
+  const [userRole, userRoleLoading] = useUserRole(user);
   const [image] = useProfileImage(user);
   const navigate = useNavigate();
 
-  const handleLogOut = async () => {
-    await signOut(auth).then(() => {
-      navigate("/");
-      localStorage.removeItem("accessToken");
-      toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
-        position: "top-center",
-      });
-    });
+  const handleLogOut = () => {
+    // swal for confirmation
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be signed out from this account.",
+      icon: "warning",
+      showCancelButton: true,
+      background: theme === "night" ? "#333" : "#fff",
+      color: theme === "night" ? "#fff" : "#333",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, sign out!",
+    }).then((result: any) => {
+      if (result.isConfirmed) {
+        // sign out from firebase
+        signOut(auth).then(() => {
+          localStorage.removeItem("accessToken");
+          navigate("/");
+          toast.success(`Thank you, ${user?.displayName} to stay with us!`, {
+            position: "top-center",
+          });
+        }).catch((err) => {
+          // toast for error
+          toast(err.message, {
+            icon: '👎',
+          })
+        })
+      }
+    })
   };
 
-  if (isLoading || adminLoading) {
+  if (isLoading || userRoleLoading) {
     return <Loading />;
   }
 
@@ -52,10 +74,10 @@ const Dashboard: any = () => {
               to="/"
               className="text-xl md:text-2xl font-semibold md:text-primary"
             >
-              {appName} <small className="text-sm">- URL Shortener</small>
+              <span className="text-primary">{appName}</span> <small className="text-sm">- URL Shortener</small>
             </Link>
             <h1 className="text-lg md:text-2xl font-semibold hidden md:flex">
-              {admin && auth?.currentUser?.email === "toufiqhasankiron2@gmail.com" ? "Developer" : admin ? "Admin" : "User"} Panel
+              {userRole && userRole === "developer" ? "Developer" : userRole === "admin" ? "Admin" : "User"} Panel
             </h1>
           </div>
           <div className="dropdown dropdown-end">
@@ -121,7 +143,7 @@ const Dashboard: any = () => {
                     </span>
                   </h1>
                   <h1 className="font-semibold">
-                    {admin && auth?.currentUser?.email === "toufiqhasankiron2@gmail.com" ? "Developer" : admin ? "Admin" : "User"} Panel
+                    ({userRole && userRole === "developer" ? "Developer" : userRole === "admin" ? "Admin" : "User"} Panel)
                   </h1>
                 </div>
                 <div className="flex justify-center">
@@ -160,13 +182,6 @@ const Dashboard: any = () => {
               <img src={URL} alt="" className="w-16" /> {appName}
               <p className="text-sm">A URL Shortener Web App</p>
             </Link>
-            <div
-              onClick={handleLogOut}
-              className="badge badge-outline border-primary hover:bg-primary text-white duration-500 cursor-pointer flex justify-center items-center gap-1 p-4"
-            >
-              <i className="bx bx-log-out"></i>
-              Sign Out
-            </div>
           </div>
           <li className="py-2 mt-4">
             <NavLink
@@ -188,42 +203,50 @@ const Dashboard: any = () => {
               <AiOutlineLink className="text-lg" /> Manage Your URLs
             </NavLink>
           </li>
-          {admin && (
-            <>
-              <li className="py-2">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "text-white bg-primary" : "text-white"
-                  }
-                  to="/dashboard/allUrls"
-                >
-                  <AiOutlineLink className="text-lg" /> Manage All The
-                  URLs
-                </NavLink>
-              </li>
-              <li className="py-2">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "text-white bg-primary" : "text-white"
-                  }
-                  to="/dashboard/allUsers"
-                >
-                  <i className="bx bxs-user-detail text-xl"></i> Manage All
-                  Users
-                </NavLink>
-              </li>
-              <li className="py-1">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "text-white bg-primary" : "text-white"
-                  }
-                  to="/dashboard/setting"
-                >
-                  <i className="bx bx-cog text-xl"></i> Setting
-                </NavLink>
-              </li>
-            </>
-          )}
+          {userRole === "admin" || userRole === "developer" ? (
+            <li className="py-2">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-white bg-primary" : "text-white"
+                }
+                to="/dashboard/allUsers"
+              >
+                <i className="bx bxs-user-detail text-xl"></i> Manage All The
+                Users
+              </NavLink>
+            </li>
+          ) :
+            (
+              <></>
+            )
+          }
+          {
+            userRole === "developer" && (
+              <>
+                <li className="py-2">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? "text-white bg-primary" : "text-white"
+                    }
+                    to="/dashboard/allUrls"
+                  >
+                    <AiOutlineLink className="text-lg" /> Manage All The
+                    URLs
+                  </NavLink>
+                </li>
+                <li className="py-2">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? "text-white bg-primary" : "text-white"
+                    }
+                    to="/dashboard/setting"
+                  >
+                    <i className="bx bx-cog text-xl"></i> Setting
+                  </NavLink>
+                </li>
+              </>
+            )
+          }
           <li className="absolute bottom-5 w-72">
             <button
               onClick={handleLogOut}

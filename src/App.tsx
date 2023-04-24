@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster } from "react-hot-toast";
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { BASE_API } from './config';
 import Root from './Layouts/Root';
@@ -12,13 +12,14 @@ import Index from './pages/ManageDashboard/Index/Index';
 import Profile from './pages/ManageDashboard/Profile/Profile';
 import Login from './pages/Authentication/Login/Login';
 import RequireAuth from './auth/RequireAuth/RequireAuth';
-import RequireAdmin from './auth/RequireAdmin/RequireAdmin';
 import Setting from './pages/ManageDashboard/Setting/Setting';
 import YourUrls from './pages/ManageDashboard/YourUrls/YourUrls';
 import ManageUsers from './pages/ManageDashboard/ManageUsers/ManageUsers';
 import LocalURLs from './pages/LocalURLs/LocalURLs';
 import LocalRedirect from './pages/LocalRedirect/LocalRedirect';
 import AllUrls from './pages/ManageDashboard/AllUrls/AllUrls';
+import RequireDev from './auth/RequireDev/RequireDev';
+import RequireAdminDev from './auth/RequireAdminDev/RequireAdminDev';
 
 const router = createBrowserRouter(
   [
@@ -82,19 +83,21 @@ const router = createBrowserRouter(
         },
         {
           path: "/dashboard/allUrls",
-          element: <AllUrls />
+          element: <RequireDev>
+            <AllUrls />
+          </RequireDev>
         },
         {
           path: "/dashboard/allUsers",
-          element: <RequireAdmin>
+          element: <RequireAdminDev>
             <ManageUsers />
-          </RequireAdmin>
+          </RequireAdminDev>
         },
         {
           path: "/dashboard/setting",
-          element: <RequireAdmin>
+          element: <RequireDev>
             <Setting />
-          </RequireAdmin>
+          </RequireDev>
         },
         {
           path: "*",

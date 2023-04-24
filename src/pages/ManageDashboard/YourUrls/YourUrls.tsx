@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BASE_API } from '../../../config';
 import { toast } from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -13,12 +13,16 @@ export default function YourUrls() {
           useTitle("Manage Your URLs")
           useScrollToTop();
           const uid = localStorage.getItem("uid");
+          const [pageLoading, setPageLoading] = useState(false);
+          const [page, setPage] = useState(1);
+          const [size] = useState(9);
+
           const {
                     data: urlsData = [],
                     isLoading,
                     refetch,
           } = useQuery(["urls"], () =>
-                    fetch(`${BASE_API}/user?uid=${uid}`, {
+                    fetch(`${BASE_API}/user/urls?uid=${uid}&page=${page}&limit=${size}`, {
                               headers: {
                                         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                               },
@@ -31,7 +35,15 @@ export default function YourUrls() {
                     })
           );
 
-          if (isLoading) return (
+          useEffect(() => {
+                    setPageLoading(true);
+                    refetch();
+                    setPageLoading(false);
+          }, [page, refetch]);
+
+          const totalPages = urlsData?.totalPages;
+
+          if (isLoading || pageLoading) return (
                     <Loading />
           )
 
@@ -44,7 +56,7 @@ export default function YourUrls() {
                               {
                                         urlsData?.urls?.length > 0 ? (
                                                   <div className='mt-8 md:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
-                                                            {urlsData?.urls?.slice(0).reverse()?.map((item: any, index: number) => {
+                                                            {urlsData?.urls?.map((item: any, index: number) => {
                                                                       return (
                                                                                 <LinksCard item={item} key={index} refetch={refetch} isLoading={isLoading} />
                                                                       )
@@ -52,9 +64,9 @@ export default function YourUrls() {
                                                   </div>
                                         ) : (
                                                   <div className='flex justify-center items-center mt-6'>
-                                                            <div className='card w-full md:w-[370px] bg-[url("./assets/bg2.jpg")] border-2 shadow-xl text-white'>
+                                                            <div className="card w-full md:w-[370px] border text-white">
                                                                       <div className="card-body">
-                                                                                <p className='text-center'>No URLs found!</p>
+                                                                                <p className='text-center'>No URLs have been shortened!</p>
                                                                       </div>
                                                                       <div className='flex justify-center items-center pb-6'>
                                                                                 <Link to="/"><button className='btn btn-sm btn-primary'>Go to Home</button></Link>
@@ -66,7 +78,7 @@ export default function YourUrls() {
 
                               {
                                         urlsData?.urls?.length > 0 && (
-                                                  <Pagination />
+                                                  <Pagination page={page} setPage={setPage} totalPages={totalPages} />
                                         )
                               }
                     </div>

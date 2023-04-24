@@ -8,6 +8,7 @@ interface PaginationProps {
 }
 
 export default function Pagination({ page, setPage, totalPages }: PaginationProps) {
+
           return (
                     <>
                               {totalPages > 0 ? (
