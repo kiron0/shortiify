@@ -20,6 +20,10 @@ import LocalRedirect from './pages/LocalRedirect/LocalRedirect';
 import AllUrls from './pages/ManageDashboard/AllUrls/AllUrls';
 import RequireDev from './auth/RequireDev/RequireDev';
 import RequireAdminDev from './auth/RequireAdminDev/RequireAdminDev';
+import About from './pages/About/About';
+import TermsAndConditions from './pages/TermsAndConditions/TermsAndConditions';
+import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
+import Contact from './pages/Contact/Contact';
 
 const router = createBrowserRouter(
   [
@@ -45,23 +49,19 @@ const router = createBrowserRouter(
     },
     {
       path: "/pages/about",
-      element: <NotFound />
+      element: <About />
     },
     {
       path: "/pages/contact",
-      element: <NotFound />
+      element: <Contact />
     },
     {
-      path: "/pages/termsOfService",
-      element: <NotFound />
-    },
-    {
-      path: "/pages/acceptableUse",
-      element: <NotFound />
+      path: "/pages/terms&Conditions",
+      element: <TermsAndConditions />
     },
     {
       path: "/pages/privacyPolicy",
-      element: <NotFound />
+      element: <PrivacyPolicy />
     },
     {
       path: "/dashboard",

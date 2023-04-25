@@ -5,7 +5,7 @@ import auth from '../../auth/Firebase/firebase.init'
 import { useQuery } from '@tanstack/react-query'
 import { BASE_API } from '../../config'
 import { FaRegEye } from 'react-icons/fa'
-import { BsClipboard } from 'react-icons/bs'
+import { BsClipboardHeart } from 'react-icons/bs'
 import { FiExternalLink } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -76,7 +76,7 @@ export default function URLBox({ localURLs }: { localURLs: [] }) {
                                                                                                                                                                                               duration: 3000,
                                                                                                                                                                                     });
                                                                                                                                                                           }}>
-                                                                                                                                                                                    <BsClipboard className='text-primary text-lg cursor-pointer' />
+                                                                                                                                                                                    <BsClipboardHeart className='text-primary text-lg cursor-pointer' />
                                                                                                                                                                           </CopyToClipboard>
                                                                                                                                                                 </div>
                                                                                                                                                       </div>
@@ -133,7 +133,7 @@ export default function URLBox({ localURLs }: { localURLs: [] }) {
                                                                                                                                                                                               duration: 3000,
                                                                                                                                                                                     });
                                                                                                                                                                           }}>
-                                                                                                                                                                                    <BsClipboard className='text-primary text-lg cursor-pointer' />
+                                                                                                                                                                                    <BsClipboardHeart className='text-primary text-lg cursor-pointer' />
                                                                                                                                                                           </CopyToClipboard>
                                                                                                                                                                 </div>
                                                                                                                                                       </div>

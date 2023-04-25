@@ -73,7 +73,7 @@ export default function ManageUsers() {
                   key={user._id}
                   userObj={user}
                   refetch={refetch}
-                ></UserRow>
+                />
               ))}
             </tbody>
           </table>

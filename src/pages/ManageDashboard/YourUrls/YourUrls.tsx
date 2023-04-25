@@ -9,6 +9,8 @@ import useTitle from '../../../hooks/useTitle';
 import useScrollToTop from '../../../hooks/useScrollToTop';
 import Pagination from './Pagination';
 
+const Fade = require("react-reveal/Fade");
+
 export default function YourUrls() {
           useTitle("Manage Your URLs")
           useScrollToTop();
@@ -26,13 +28,14 @@ export default function YourUrls() {
                               headers: {
                                         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                               },
-                    }).then((res) => res.json()).then((data) => {
-                              if (data?.error) {
-                                        toast.error(data?.error);
-                                        return;
-                              }
-                              return data;
-                    })
+                    }).then((res) => res.json())
+                              .then((data) => {
+                                        if (data?.error) {
+                                                  toast.error(data?.error);
+                                                  return;
+                                        }
+                                        return data;
+                              })
           );
 
           useEffect(() => {
@@ -43,7 +46,7 @@ export default function YourUrls() {
 
           const totalPages = urlsData?.totalPages;
 
-          if (isLoading || pageLoading) return (
+          if (isLoading || pageLoading || !urlsData?.urls || !urlsData?.urls?.length) return (
                     <Loading />
           )
 
@@ -53,34 +56,36 @@ export default function YourUrls() {
                                         <h3 className="text-2xl font-semibold text-white">Manage Your URLs</h3>
                                         <span className='text-white'>You can manage all the URLs whom are already created</span>
                               </div>
-                              {
-                                        urlsData?.urls?.length > 0 ? (
-                                                  <div className='mt-8 md:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
-                                                            {urlsData?.urls?.map((item: any, index: number) => {
-                                                                      return (
-                                                                                <LinksCard item={item} key={index} refetch={refetch} isLoading={isLoading} />
-                                                                      )
-                                                            })}
-                                                  </div>
-                                        ) : (
-                                                  <div className='flex justify-center items-center mt-6'>
-                                                            <div className="card w-full md:w-[370px] border text-white">
-                                                                      <div className="card-body">
-                                                                                <p className='text-center'>No URLs have been shortened!</p>
-                                                                      </div>
-                                                                      <div className='flex justify-center items-center pb-6'>
-                                                                                <Link to="/"><button className='btn btn-sm btn-primary'>Go to Home</button></Link>
+                              <Fade top distance="20px">
+                                        {
+                                                  urlsData?.urls?.length > 0 ? (
+                                                            <div className='mt-8 md:mx-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+                                                                      {urlsData?.urls?.map((item: any, index: number) => {
+                                                                                return (
+                                                                                          <LinksCard item={item} key={index} refetch={refetch} isLoading={isLoading} />
+                                                                                )
+                                                                      })}
+                                                            </div>
+                                                  ) : (
+                                                            <div className='flex justify-center items-center mt-6'>
+                                                                      <div className="card w-full md:w-[370px] border text-white">
+                                                                                <div className="card-body">
+                                                                                          <p className='text-center'>No URLs have been shortened!</p>
+                                                                                </div>
+                                                                                <div className='flex justify-center items-center pb-6'>
+                                                                                          <Link to="/"><button className='btn btn-sm btn-primary'>Go to Home</button></Link>
+                                                                                </div>
                                                                       </div>
                                                             </div>
-                                                  </div>
-                                        )
-                              }
+                                                  )
+                                        }
 
-                              {
-                                        urlsData?.urls?.length > 0 && (
-                                                  <Pagination page={page} setPage={setPage} totalPages={totalPages} />
-                                        )
-                              }
+                                        {
+                                                  urlsData?.urls?.length > 0 && (
+                                                            <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+                                                  )
+                                        }
+                              </Fade>
                     </div>
           )
 }

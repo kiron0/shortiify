@@ -106,7 +106,7 @@ export default function Navbar() {
               </label>
               <ul
                 tabIndex={0}
-                className="mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-[url('./assets/bg.jpg')] text-white rounded-box w-72"
+                className={`mt-3 p-2 shadow-xl menu menu-compact dropdown-content bg-[url('./assets/bg.jpg')] text-white rounded-box ${userRole === "admin" ? "w-[22rem]" : userRole === "developer" ? "w-[22rem]" : "w-72"}`}
               >
                 <span className="absolute top-2 right-2 cursor-pointer" onClick={handleThemeChange}>
                   {

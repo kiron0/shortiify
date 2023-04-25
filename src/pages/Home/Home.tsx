@@ -206,7 +206,7 @@ export default function Home() {
                                                                       <span className="label-text text-white">Your Long URL</span>
                                                             </label>
                                                             <div className='flex flex-col md:flex-row justify-center items-center gap-3'>
-                                                                      <input type="text" name='URL' placeholder="Type/Paste your URL" onChange={handleURLError} className={`input w-full max-w-xs bg-transparent border-1 border-white text-white lowercase placeholder:text-gray-300 ${urlError && "border-error shadow-error outline-error"}`} autoComplete='off' />
+                                                                      <input type="text" name='URL' placeholder="Type/Paste your URL" onChange={handleURLError} className={`input outline-none focus-visible:shadow-none focus:border-primary w-full max-w-xs bg-transparent border-1 border-white text-white lowercase placeholder:text-gray-200 ${urlError && "border-error shadow-error outline-error"}`} autoComplete='off' />
                                                                       <button className={`btn btn-primary text-white ${urlError ? 'btn-disabled cursor-not-allowed' : ''}`}>{loading ? <ClipLoader loading={loading}
                                                                                 color="#fff"
                                                                                 size={20}
@@ -217,7 +217,7 @@ export default function Home() {
                                                                                 {urlError}
                                                                       </small>
                                                             )}
-                                                            <small className='text-white text-center mt-3'>By clicking Shorten URL, you agree to {appName}'s <Link to="/pages/termsOfService" className='underline'>Terms of Use</Link>, <Link to="/pages/privacyPolicy" className='underline'>Privacy Policy</Link> and <Link to="/pages/acceptableUse" className='underline'>Use Policy</Link>.</small>
+                                                            <small className='text-white text-center mt-3'>By clicking Shorten URL, you agree to {appName}'s <Link to="/pages/terms&Conditions" className='underline'>Terms & Conditions</Link> and <Link to="/pages/privacyPolicy" className='underline'>Privacy Policy</Link>.</small>
                                                   </div>
                                         </form>
                               </div>

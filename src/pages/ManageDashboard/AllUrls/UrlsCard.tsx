@@ -1,7 +1,7 @@
 import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { toast } from 'react-hot-toast'
-import { BsClipboard } from 'react-icons/bs';
+import { BsClipboardHeart } from 'react-icons/bs';
 import { FaRegEye } from 'react-icons/fa';
 import Loading from '../../../components/Loading/Loading';
 
@@ -34,7 +34,7 @@ export default function UrlsCard({ url, loading }: UrlsListProps) {
                                                                                 duration: 3000,
                                                                       });
                                                             }}>
-                                                                      <BsClipboard className='text-primary text-lg cursor-pointer' />
+                                                                      <BsClipboardHeart className='text-primary text-lg cursor-pointer' />
                                                             </CopyToClipboard>
                                                   </div>
                                         </div>

@@ -27,8 +27,7 @@ export default function Footer() {
                                                   </div>
                                         </div>
                                         <div className="mt-12 flex flex-col md:flex-row justify-center items-center text-sm text-white">
-                                                  <Link to='/pages/termsOfService' className='px-2'>Terms & Conditions</Link>
-                                                  <Link to='/pages/acceptableUse' className='px-2 md:border-l'>User Policy</Link>
+                                                  <Link to='/pages/terms&Conditions' className='px-2'>Terms & Conditions</Link>
                                                   <Link to='/pages/privacyPolicy' className='px-2 md:border-l'>Privacy Policy</Link>
                                                   <Link to='/pages/about' className='px-2 md:border-l'>About</Link>
                                                   <Link to='/pages/contact' className='px-2 md:border-l'>Contact</Link>
