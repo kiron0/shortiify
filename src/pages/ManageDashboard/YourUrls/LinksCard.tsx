@@ -46,20 +46,20 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                         Swal.fire({
                                                   title: `Are you sure you want to delete the URL?`,
                                                   input: "text",
-                                                  inputPlaceholder: "Type 'deleteURL' to confirm",
+                                                  inputPlaceholder: "Type 'confirm' to confirm",
                                                   background: "#333",
                                                   color: "#fff",
                                                   inputAttributes: {
                                                             autocapitalize: "off",
                                                             autocorrect: "off",
-                                                            maxlength: 9,
+                                                            maxlength: 7,
                                                   },
                                                   showCancelButton: true,
                                                   confirmButtonText: "Confirm",
                                                   showLoaderOnConfirm: true,
                                                   preConfirm: (confirm: any) => {
-                                                            if (confirm !== "deleteURL") {
-                                                                      Swal.showValidationMessage(`You must type 'deleteURL' to confirm`);
+                                                            if (confirm !== "confirm") {
+                                                                      Swal.showValidationMessage(`You must type 'confirm' to confirm`);
                                                             } else {
                                                                       const uid = localStorage.getItem("uid");
                                                                       fetch(`${BASE_API}/user/url/delete?uid=${uid}&&slug=${slug}`, {
@@ -78,7 +78,8 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                                                           icon: "success",
                                                                                           background: "#333",
                                                                                           color: "#fff",
-                                                                                          confirmButtonText: "Ok, Got it!",
+                                                                                          showConfirmButton: false,
+                                                                                          timer: 1500,
                                                                                 });
                                                                                 refetch();
                                                                       })
@@ -108,20 +109,20 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                         Swal.fire({
                                                   title: `Are you sure you want to update the URL?`,
                                                   input: "text",
-                                                  inputPlaceholder: "Type 'updateURL' to confirm",
+                                                  inputPlaceholder: "Type 'confirm' to confirm",
                                                   background: "#333",
                                                   color: "#fff",
                                                   inputAttributes: {
                                                             autocapitalize: "off",
                                                             autocorrect: "off",
-                                                            maxlength: 9,
+                                                            maxlength: 7,
                                                   },
                                                   showCancelButton: true,
                                                   confirmButtonText: "Confirm",
                                                   showLoaderOnConfirm: true,
                                                   preConfirm: (confirm: any) => {
-                                                            if (confirm !== "updateURL") {
-                                                                      Swal.showValidationMessage(`You must type 'updateURL' to confirm`);
+                                                            if (confirm !== "confirm") {
+                                                                      Swal.showValidationMessage(`You must type 'confirm' to confirm`);
                                                             } else {
                                                                       if (inputUrl === "") {
                                                                                 toast.error("Url cannot be empty");
@@ -147,7 +148,8 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                                                                                                               icon: "success",
                                                                                                               background: "#333",
                                                                                                               color: "#fff",
-                                                                                                              confirmButtonText: "Ok, Cool!",
+                                                                                                              showConfirmButton: false,
+                                                                                                              time: 1500,
                                                                                                     })
                                                                                                     refetch();
                                                                                                     setIsEditUrl(false);
@@ -175,73 +177,52 @@ export default function LinksCard({ item, refetch, isLoading }: Props) {
                               confirmButtonText: "Yes, proceed!",
                     }).then((willDelete: any) => {
                               if (willDelete.isConfirmed) {
-                                        Swal.fire({
-                                                  title: `Are you sure you want to update the Slug?`,
-                                                  input: "text",
-                                                  inputPlaceholder: "Type 'updateSLUG' to confirm",
-                                                  background: "#333",
-                                                  color: "#fff",
-                                                  inputAttributes: {
-                                                            autocapitalize: "off",
-                                                            autocorrect: "off",
-                                                            maxlength: 10,
-                                                  },
-                                                  showCancelButton: true,
-                                                  confirmButtonText: "Confirm",
-                                                  showLoaderOnConfirm: true,
-                                                  preConfirm: (confirm: any) => {
-                                                            if (confirm !== "updateSLUG") {
-                                                                      Swal.showValidationMessage(`You must type 'updateSLUG' to confirm`);
-                                                            } else {
-                                                                      if (inputSlug === "") {
-                                                                                toast.error("Slug cannot be empty");
-                                                                                return;
-                                                                      } else if (inputSlug?.length !== 6) {
-                                                                                toast.error("Slug must be 6 characters long");
+                                        if (inputSlug === "") {
+                                                  toast.error("ID cannot be empty");
+                                                  return;
+                                        } else if (inputSlug?.length !== 6) {
+                                                  toast.error("ID must be 6 characters long");
+                                                  return;
+                                        } else {
+                                                  fetch(`${BASE_API}/user/getSlug?slug=${inputSlug}&id=${item?._id}`, {
+                                                            method: "PATCH",
+                                                            headers: {
+                                                                      "Content-Type": "application/json",
+                                                                      authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                                                            },
+                                                            body: JSON.stringify({
+                                                                      slug: inputSlug,
+                                                            }),
+                                                  }).then((res) => res.json())
+                                                            .then((data) => {
+                                                                      if (data?.message === "Slug already exists") {
+                                                                                Swal.fire({
+                                                                                          title: "Short URL is not available",
+                                                                                          icon: "warning",
+                                                                                          background: "#333",
+                                                                                          color: "#fff",
+                                                                                          confirmButtonText: "Ok, Got it!",
+                                                                                })
                                                                                 return;
                                                                       } else {
-                                                                                fetch(`${BASE_API}/user/getSlug?slug=${inputSlug}&id=${item?._id}`, {
-                                                                                          method: "PATCH",
-                                                                                          headers: {
-                                                                                                    "Content-Type": "application/json",
-                                                                                                    authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                                                                                          },
-                                                                                          body: JSON.stringify({
-                                                                                                    slug: inputSlug,
-                                                                                          }),
-                                                                                }).then((res) => res.json())
-                                                                                          .then((data) => {
-                                                                                                    if (data?.message === "Slug already exists") {
-                                                                                                              Swal.fire({
-                                                                                                                        title: "Slug already exists",
-                                                                                                                        icon: "warning",
-                                                                                                                        background: "#333",
-                                                                                                                        color: "#fff",
-                                                                                                                        confirmButtonText: "Ok, Got it!",
-                                                                                                              })
-                                                                                                              return;
-                                                                                                    } else {
-                                                                                                              Swal.fire({
-                                                                                                                        title: "Updated!",
-                                                                                                                        text: `${data.message}`,
-                                                                                                                        icon: "success",
-                                                                                                                        background: "#333",
-                                                                                                                        color: "#fff",
-                                                                                                                        confirmButtonText: "Ok, Cool!",
-                                                                                                              })
-                                                                                                              refetch();
-                                                                                                              setIsEditSlug(false);
-                                                                                                    }
-                                                                                          })
+                                                                                Swal.fire({
+                                                                                          title: "Updated!",
+                                                                                          text: 'Short URL has been updated',
+                                                                                          icon: "success",
+                                                                                          background: "#333",
+                                                                                          color: "#fff",
+                                                                                          showConfirmButton: false,
+                                                                                          timer: 1500,
+                                                                                })
+                                                                                refetch();
+                                                                                setIsEditSlug(false);
                                                                       }
-                                                            }
-                                                  },
-                                        });
+                                                            })
+                                        }
                               }
                     });
           }
 
-          // Add commas or spaces to group every three digits
           const numberWithCommas = (x: number) => {
                     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           }

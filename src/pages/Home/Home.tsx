@@ -217,7 +217,7 @@ export default function Home() {
                                                                                 {urlError}
                                                                       </small>
                                                             )}
-                                                            <small className='text-white text-center mt-3'>By clicking Shorten URL, you agree to {appName}'s <Link to="/pages/terms&Conditions" className='underline'>Terms & Conditions</Link> and <Link to="/pages/privacyPolicy" className='underline'>Privacy Policy</Link>.</small>
+                                                            <small className='px-1 md:px-0 text-white text-center mt-3'>By clicking Shorten URL, you agree to {appName}'s <Link to="/pages/terms&Conditions" className='underline'>Terms & Conditions</Link> and <Link to="/pages/privacyPolicy" className='underline'>Privacy Policy</Link>.</small>
                                                   </div>
                                         </form>
                               </div>
